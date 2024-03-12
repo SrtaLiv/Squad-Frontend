@@ -1,0 +1,101 @@
+@import "../../style.scss";
+
+.navbar{
+    @include themify($themes){
+        // display: flex;
+        // align-items: center;
+        // justify-content: space-between;
+        // padding: 10px 20px;
+        // height: 50px;
+        // border-bottom: 1px solid themed("border");
+        // position: sticky;
+        // top: 0;
+        // background-color: themed("bg");
+        // color:themed("textColor");
+        // z-index: 999;
+        // margin: 0;
+    }
+        background-color: #000;
+        position: sticky;
+        top: 0;
+        z-index: 7777;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 1rem;
+        
+        .logo{
+            display: flex;
+            align-items: center;
+            img{
+                max-width: 150px;
+                width: auto;
+                height: auto;
+            }    
+        }
+
+        .profile{
+            display: flex;
+            flex-direction: row;
+            padding: 1rem;
+            align-items: center;
+        }
+
+    //     .left{
+    //         display: flex;
+    //         align-items: center;
+    //         gap: 30px;
+
+    //         h1{
+    //             color:themed("textColor");        }
+
+    //         .search{
+    //             display: flex;
+    //             align-items: center;
+    //             background-color: themed("#f6f3f3");
+    //             border: 1px solid themed("border");
+    //             border-radius: 25px;
+    //             position: relative;
+                
+    //             input{
+    //                 border: none;
+    //                 padding: 15px;
+    //                 border-radius: 25px;
+    //                 width: 500px;
+    //                 background-color: transparent;
+    //                 color: themed("textColor");
+
+    //                 // @include mobile{
+    //                 //     display: none;
+    //                 //   }
+            
+    //                 //   @include tablet{
+    //                 //     width: 200px;
+    //                 //   }
+    //             }
+    //         }
+    //     }
+
+    //     .right{
+    //         display: flex;
+    //         align-items: center;
+    //         gap: 20px;
+
+    //         .user{
+    //             display: flex;
+    //             align-items: center;
+    //             gap: 20px;
+    //             span{
+    //                 color: themed("textColor");
+    //                 font-size: 12px;
+    //             }
+    //             img{
+    //                 width: 30px;
+    //                 height: 30px;
+    //                 border-radius: 50px;
+    //                 object-fit: cover;
+    //             }
+    //         }
+    //     }
+    // }
+}

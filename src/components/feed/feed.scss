@@ -1,0 +1,15 @@
+@import "../../style.scss";
+
+.feed {
+  // display: flex;
+  // flex-direction: column;
+
+  @include themify($themes) {
+    background-color: themed("bg");
+  }
+  height: 100vh;
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

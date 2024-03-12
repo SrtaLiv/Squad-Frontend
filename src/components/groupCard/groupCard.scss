@@ -1,0 +1,223 @@
+@import "../../style.scss";
+
+// .group {
+//     @include themify($themes) {
+//         .card {
+//         background-color: themed("bg");
+//         color: themed("textColor");
+//         margin-left: 30px;
+//         border: 1px solid;
+//         display: flex;
+//         flex-direction: column;
+//         border-radius: 20px;
+//         padding: 1.4em;
+//         margin: 20px;
+//         .top {
+//             margin: -20px 10px 0 30px;
+//             background-color: var(--bg-black);
+//             display: flex;
+//             flex-direction: row;
+//             justify-content: space-between;
+//             align-items: center;
+//             .profileCard {
+//                 display: flex;
+//                 flex-direction: row;
+//                 gap: 0.5rem;
+//                 align-items: center;
+
+//                 img{
+//                     width: 30px;
+//                     height: 30px;
+//                     border-radius: 30px;
+//                 }
+//                 h3{
+
+//                 }
+//                 &:hover{
+//                     color:  gray;
+//                 }
+//             }
+//                 .time{
+//                     display: flex;
+//                     gap: 10px;
+//                 }
+//         }
+//         .info-card{
+//             display: flex;
+//             flex-direction: column;
+//             margin-top: -20px;
+//             margin-left: 30px; //ver q tamanio
+//             h2{
+
+//             }
+//             p{
+//                 margin-top: -5px;
+//             }
+//         }
+//         .bottom{
+//             display: flex;
+//             flex-direction: row;
+//             justify-content: space-between;
+//             align-items: center;
+//             margin-left: 30px;
+//             .badges {
+//                 display: flex;
+//                 flex-direction: row;
+//                 justify-content: flex-start;
+//                 gap: 0.75rem;
+
+//                 .badge {
+//                     padding: 0.5rem 1rem;
+//                     border-radius: 5px;
+//                     font-size: 0.85rem;
+//                     font-weight: bold;
+//                 }
+
+//                 .badge-red {
+//                     color: rgb(255, 255, 255);
+//                     background-color: violet;
+//                 }
+
+//                 .badge-blue {
+//                     color: lightblue;
+//                     background-color: navy;
+//                 }
+//             }
+//             .info{
+//                 display: flex;
+//                 align-items: center;
+//                 .members{
+//                     padding: 2px;
+//                 margin: 3px;
+//                 gap: 10px;
+//                 display: flex;
+//                 align-items: center;
+//                 }
+//                 i{
+//                     border: 1px solid;
+//                     border-radius: 500px;
+//                     padding:8px;
+//                     cursor: pointer;
+//                     &:hover {
+//                         background-color: rgb(138, 210, 108);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+//     }
+// }
+
+.card {
+  @include themify($themes) {
+    background-color: themed("cardBackground");
+    color: themed("cardText");
+  }
+
+  min-height: 12rem;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 2px 5px 14px 0px #00000036;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+
+    .header-top {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+
+      .info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .title {
+        font-size: 1rem;
+        padding: 0;
+        margin: 0;
+      }
+
+      @include themify($themes) {
+        .subtitle {
+          font-size: 0.75rem;
+          color: themed("cardTextMuted");
+        }
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .description {
+      font-size: 1rem;
+    }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .badges {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+
+      .join-btn {
+        background: var(--gradient-1);
+        border: none;
+        border-radius: 100%;
+        width: 35px;
+        height: 35px;
+        color: var(--text-white);
+      }
+
+      .members {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .badge {
+    background-color: gray;
+    border-radius: 15px;
+    padding: 0 0.75rem;
+    height: 30px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .badge .badge-title {
+    font-weight: 500;
+  }
+
+  .badge.badge-red {
+    background-color: #ff9d9d;
+  }
+
+  .badge.badge-blue {
+    background-color: #9dbeff;
+  }
+}

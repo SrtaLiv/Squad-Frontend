@@ -1,0 +1,17 @@
+@import "../../style.scss";
+
+.profile {
+    @include themify($themes) {
+        .images{
+            .banner{
+
+            }
+            .profilePic{
+
+            }
+        }
+        .profileContainer{
+
+        } 
+    }
+}

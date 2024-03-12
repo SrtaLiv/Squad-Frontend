@@ -1,0 +1,94 @@
+// ========= GLOBAL STYLES ========= //
+:root {
+  --bg-white: #ffffff;
+  --bg-secondary: #e3e3e3;
+  --bg-black: #000000;
+  --bg-dark: #1f2123;
+  --bg-dark-2: #1f2123;
+
+  --text-white: #ffffff;
+  --text-secondary: #9a9284;
+  --text-black: #000000;
+  --text-href: #4fcaed;
+  --text-mute: #9a9284;
+
+  --accent-100: #0085ff;
+
+  --gradient-1: linear-gradient(71deg, rgba(19, 149, 186, 1) 0%, rgba(21, 183, 136, 1) 100%);
+}
+
+body {
+  margin: 0;
+  // font-family: sans-serif;
+  font-family: Noto Sans;
+}
+
+.icon-btn {
+  height: 2rem;
+  width: 2rem;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  transition: 0.25s;
+}
+
+.profile-img {
+  height: 45px;
+  width: 45px;
+  border-radius: 100%;
+}
+
+// ========= SCSS THEME VARIABLES ========= //
+$themes: (
+  light: (
+    textColor: #000,
+    bg: white,
+    logo: darkblue,
+    bgSoft: #f6f3f3,
+    textColorSoft: #c7aeae,
+    border: lightgray,
+
+    cardBackground: var(--bg-secondary),
+    cardText: var(--text-black),
+    cardTextMuted: var(--text-secondary),
+  ),
+
+  dark: (
+    textColor: rgb(255, 255, 255),
+    bg: #000000,
+    logo: white,
+    bgSoft: #333,
+    textColorSoft: lightgray,
+    border: #444,
+
+    cardBackground: var(--bg-dark-2),
+    cardText: var(--text-white),
+    cardTextMuted: var(--text-secondary),
+  ),
+);
+
+//Funcion para cambiar el tema
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), "#{$key}");
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value,
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+//agregar en navbar
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
