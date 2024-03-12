@@ -61,17 +61,13 @@ const GroupCard = ({ group }) => {
     // </div>
 
     <div className="card">
-      <div className="header">
-        <div className="header-top">
-          <div className="profile">
-            <img className="profile-img" src={profileImg} />
-          </div>
 
+      <div className="header">
+          <img className="profile-img" src={group.profilePic} />
           <div className="info">
             <h2 className="title">{group.title}</h2>
             <label className="subtitle">Facultad de ciencias exactas - TUDAI - Programacion 2</label>
           </div>
-        </div>
       </div>
 
       <div className="content">
@@ -79,6 +75,7 @@ const GroupCard = ({ group }) => {
       </div>
 
       <div className="footer">
+        
         <div className="badges">
           <div className="badge badge-red">
             <label className="badge-title">Parcial</label>
@@ -96,7 +93,9 @@ const GroupCard = ({ group }) => {
             <i className="fa-solid fa-plus"></i>
           </button>
         </div>
+        
       </div>
+
     </div>
   );
 };

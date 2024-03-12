@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./register.scss";
-import logo from './logo.png';
+// import logo from './logo.png';
 import google from "/src/assets/google.png";
 import facebook from "/src/assets/facebook.png";
 

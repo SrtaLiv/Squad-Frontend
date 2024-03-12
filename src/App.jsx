@@ -1,27 +1,27 @@
-import React, { useContext } from 'react';
-import './App.css';
+import React, { useContext } from "react";
 
-import logo from './assets/logo.png';
-import Login from './pages/login/Login.jsx'; // Cambiar la ruta absoluta a relativa
-import Register from './pages/register/Register.jsx'; // Cambiar la ruta absoluta a relativa
-import Navbar from './components/navbar/Navbar.jsx'; // Cambiar la ruta absoluta a relativa
-import Home from './pages/home/Home.jsx'
-import './style.scss';
+import Login from "./pages/login/Login.jsx";              // Cambiar la ruta absoluta a relativa
+import Register from "./pages/register/Register.jsx";     // Cambiar la ruta absoluta a relativa
+import Navbar from "./components/navbar/Navbar.jsx";      // Cambiar la ruta absoluta a relativa
+// import Home from './pages/home/Home.jsx'               // redundande ?
+import Feed from "./components/feed/Feed.jsx";
 
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 import { DarkModeContext } from "./context/darkModeContext";
-import { AuthContext } from './context/authContext.jsx';
-import Profile from './components/profile/Profile.jsx';
+import { AuthContext } from "./context/authContext.jsx";
+import Profile from "./components/profile/Profile.jsx";
+
+import "./style.scss";
 
 function App() {
-   const {currentUser} = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const { darkMode } = useContext(DarkModeContext);
 
-  const Layout = () => {
+  const Home = () => {
     return (
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
         <Navbar />
-        <Home/>
+        <Feed />
       </div>
     );
   };
@@ -33,28 +33,27 @@ function App() {
     return children;
   };
 
-
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout/>
+      element: <Home />,
     },
     {
       path: "/login",
-      element: <Login />
+      element: <Login />,
     },
     {
       path: "/register",
-      element: <Register />
+      element: <Register />,
     },
-    {
-      path: "/navbar",
-      element: <Navbar />
-    },
+    // {
+    //   path: "/navbar",
+    //   element: <Navbar />,
+    // },
     {
       path: "profile/:id",
-      element: <Profile />
-    }
+      element: <Profile />,
+    },
   ]);
 
   return (

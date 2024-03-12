@@ -42,26 +42,26 @@ body {
 // ========= SCSS THEME VARIABLES ========= //
 $themes: (
   light: (
-    textColor: #000,
-    bg: white,
-    logo: darkblue,
-    bgSoft: #f6f3f3,
-    textColorSoft: #c7aeae,
-    border: lightgray,
-
+    // textColor: #000,
+    // logo: darkblue,
+    // bgSoft: #f6f3f3,
+    // textColorSoft: #c7aeae,
+    // border: lightgray,
+    
+    background: white,
     cardBackground: var(--bg-secondary),
     cardText: var(--text-black),
     cardTextMuted: var(--text-secondary),
   ),
 
   dark: (
-    textColor: rgb(255, 255, 255),
-    bg: #000000,
-    logo: white,
-    bgSoft: #333,
-    textColorSoft: lightgray,
-    border: #444,
-
+    // textColor: rgb(255, 255, 255),
+    // logo: white,
+    // bgSoft: #333,
+    // textColorSoft: lightgray,
+    // border: #444,
+    
+    background: #000000,
     cardBackground: var(--bg-dark-2),
     cardText: var(--text-white),
     cardTextMuted: var(--text-secondary),
