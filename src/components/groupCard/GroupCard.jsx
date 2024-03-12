@@ -63,15 +63,16 @@ const GroupCard = ({ group }) => {
     <div className="card">
 
       <div className="header">
-          <img className="profile-img" src={group.profilePic} />
+          {/* <img className="profile-img" src={group.profilePic} /> */}
+          <img className="profile-img" src={profileImg} />
           <div className="info">
             <h2 className="title">{group.title}</h2>
-            <label className="subtitle">Facultad de ciencias exactas - TUDAI - Programacion 2</label>
+            <label className="subtitle">{group.facultad} - {group.carrera}</label>
           </div>
       </div>
 
       <div className="content">
-        <p className="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, error, explicabo nemo odio, doloribus ullam consequuntur quasi deserunt architecto temporibus porro officiis! Voluptate maxime dolor alias cumque, dolorum veritatis nemo.</p>
+        <p className="description">{group.description}</p>
       </div>
 
       <div className="footer">
