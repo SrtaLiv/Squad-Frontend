@@ -1,8 +1,6 @@
 @import "../../style.scss";
 
 .navbar {
-  @include themify($themes) {
-  }
   background-color: #000;
   position: sticky;
   top: 0;
@@ -16,6 +14,7 @@
   .logo {
     display: flex;
     align-items: center;
+
     img {
       max-width: 150px;
       width: auto;
@@ -28,5 +27,43 @@
     flex-direction: row;
     padding: 1rem;
     align-items: center;
+  }
+
+  .sidenav {
+    background-color: rgb(167, 136, 141);
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    flex: 0 0 auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 777;
+    padding-top: 1rem;      
+    
+    &.open {
+    }
+
+    .header {
+      display: flex;
+      background-color: pink;
+      flex-direction: column;
+    }
+
+    .profile-sidenav {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

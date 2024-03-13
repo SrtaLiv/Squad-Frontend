@@ -53,7 +53,6 @@ const GroupCard = ({ group }) => {
     //                             <FontAwesomeIcon icon={faCheck} />
     //                         }
     //                     </i>
-
     //                 </div>
     //             </div>
     //         </div>

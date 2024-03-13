@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 
-import Login from "./pages/login/Login.jsx";              // Cambiar la ruta absoluta a relativa
-import Register from "./pages/register/Register.jsx";     // Cambiar la ruta absoluta a relativa
-import Navbar from "./components/navbar/Navbar.jsx";      // Cambiar la ruta absoluta a relativa
-// import Home from './pages/home/Home.jsx'               // redundande ?
+import Login from "./pages/login/Login.jsx";             
+import Register from "./pages/register/Register.jsx";    
+import Navbar from "./components/navbar/Navbar.jsx";      
 import Feed from "./components/feed/Feed.jsx";
 
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
@@ -48,8 +47,6 @@ function App() {
     },
     // {
     //   path: "/navbar",
-    //   element: <Navbar />,
-    // },
     {
       path: "profile/:id",
       element: <Profile />,
