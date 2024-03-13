@@ -35,7 +35,7 @@ const Feed = () => {
   }
 
   return (
-    <div>
+    <div className="feed">
       {groups.map((group) => (
         // <GroupCard key={group.id} group={group} />
         <GroupCard group={group} key={group.ulid}/>

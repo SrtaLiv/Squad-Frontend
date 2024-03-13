@@ -10,3 +10,21 @@
   padding: 1rem 0.5rem;
   gap: 1rem;
 }
+
+
+@media only screen and (min-width: 990px) {
+
+  .card{
+      max-height: 200px;
+  }
+
+  .feed{
+      padding: 1rem;
+      height: unset;
+      display: grid; 
+      grid-auto-rows: 1fr; 
+      grid-template-columns: 1fr 1fr 1fr 1fr; 
+      gap: 1rem 1rem; 
+  }
+
+}
