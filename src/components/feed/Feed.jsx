@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import GroupCard from "../groupCard/GroupCard";
+import customAxios from "../CustomAxios";
 import "./feed.scss";
 
 const Feed = () => {
@@ -9,19 +10,9 @@ const Feed = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const token = "4|ddxnKELSNe6qSYowdmq9uXJUsGIhqIEL7wGVGrMbd447670c";
-        const response = await fetch("http://squad.ddns.net/api/v1/groups", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await customAxios.get("/groups");
+        setGroups(response.data.data);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch groups");
-        }
-
-        const data = await response.json();
-        setGroups(data.data); // Assuming data is an array of group objects
       } catch (error) {
         setError(error.message);
       }
@@ -37,8 +28,7 @@ const Feed = () => {
   return (
     <div className="feed">
       {groups.map((group) => (
-        // <GroupCard key={group.id} group={group} />
-        <GroupCard group={group} key={group.ulid}/>
+        <GroupCard key={group.ulid} group={group} />
       ))}
     </div>
   );

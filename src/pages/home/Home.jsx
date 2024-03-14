@@ -1,13 +1,23 @@
-// import React, { useContext } from "react";
-// import "./home.scss";
-// import Feed from '../../components/feed/Feed'
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-// const Home = () => {
-//     return (
-//         <div className="home">
-//             <Feed/>
-//         </div>
-//     );
-// }
+import AuthGuard from "../../components/AuthGuard.jsx";
+import Navbar from "../../components/navbar/Navbar.jsx";
+import Feed from "../../components/feed/Feed.jsx";
 
-// export default Home;
+import { DarkModeContext } from "../../context/darkModeContext.jsx";
+
+import "./home.scss";
+
+const Home = () => {
+  const { darkMode } = useContext(DarkModeContext);
+  return (
+    <div className={`theme-${darkMode ? "dark" : "light"}`}>
+      <AuthGuard />
+      <Navbar />
+      <Feed />
+    </div>
+  );
+};
+
+export default Home;

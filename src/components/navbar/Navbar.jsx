@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faMoon, faXmark, faSun, faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 import { DarkModeContext } from "../../context/darkModeContext";
-import { AuthContext } from "../../context/authContext";
+// import { AuthContext } from "../../context/authContext";
 import { Link } from "react-router-dom";
 
 import "./navbar.scss";
@@ -11,7 +11,7 @@ import profileImg from "../../assets/ppl.jpg";
 
 const Navbar = () => {
   const { darkMode, toggle } = useContext(DarkModeContext);
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
   const [showSidenav, setMenu] = useState(false);
 
   function handleMoreClick() {
@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       
-      <button class="icon-btn" onClick={handleMoreClick}>
+      <button className="icon-btn" onClick={handleMoreClick}>
         <FontAwesomeIcon icon={faBars} />{" "}
       </button>
 
