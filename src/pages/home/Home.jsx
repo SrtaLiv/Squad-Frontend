@@ -1,5 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import customAxios from "../../components/CustomAxios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faMoon, faXmark, faSun, faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
@@ -8,20 +9,42 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import profileImg from "../../assets/ppl.jpg";
 
+import GroupCard from "../../components/groupCard/GroupCard";
 import AuthGuard from "../../components/AuthGuard.jsx";
 import Navbar from "../../components/navbar/Navbar.jsx";
-import Feed from "../../components/feed/Feed.jsx";
+// import Feed from "../../components/feed/Feed.jsx";
 
 import { DarkModeContext } from "../../context/darkModeContext.jsx";
 
 import "./home.scss";
+import "./feed.scss";
 
 const Home = () => {
   const { darkMode } = useContext(DarkModeContext);
+  
   const [showSidenav, setMenu] = useState(false);
+  const [groups, setGroups] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await customAxios.get("/groups");
+        setGroups(response.data.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchGroups();
+  }, []);
 
   function handleMoreClick() {
     setMenu(!showSidenav);
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   return (
@@ -79,7 +102,20 @@ const Home = () => {
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </button>
         </Navbar>
-        <Feed />
+        {/* <Feed /> */}
+
+        <div className="feed">
+          {groups ? (
+            groups.map((group) => (
+              <Link to={`/groups/${group.ulid}`} key={group.ulid} style={{ textDecoration: "none", color: "inherit" }}>
+                <GroupCard key={group.ulid} group={group} />
+              </Link>
+            ))
+          ) : (
+            <Backdrop></Backdrop>
+          )}
+        </div>
+
       </div>
     </>
   );
