@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import GroupCard from "../groupCard/GroupCard";
 import customAxios from "../CustomAxios";
+import Backdrop from "../backdrop/Backdrop";
 import "./feed.scss";
 
 const Feed = () => {
@@ -12,7 +15,6 @@ const Feed = () => {
       try {
         const response = await customAxios.get("/groups");
         setGroups(response.data.data);
-
       } catch (error) {
         setError(error.message);
       }
@@ -27,9 +29,15 @@ const Feed = () => {
 
   return (
     <div className="feed">
-      {groups.map((group) => (
-        <GroupCard key={group.ulid} group={group} />
-      ))}
+      {groups ? (
+        groups.map((group) => (
+          <Link to={`/groups/${group.ulid}`} key={group.ulid} style={{ textDecoration: "none", color: "inherit" }}>
+            <GroupCard key={group.ulid} group={group} />
+          </Link>
+        ))
+      ) : (
+        <Backdrop></Backdrop>
+      )}
     </div>
   );
 };

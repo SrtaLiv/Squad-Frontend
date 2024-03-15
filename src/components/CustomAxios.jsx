@@ -8,7 +8,7 @@ const customAxios = axios.create({
   baseURL: "http://squad.ddns.net/api/v1",
   headers: {
     "Content-Type": "application/json",
-    Authorization: authToken ? `Bearer ${authToken}` : "",
+    "Authorization": authToken ? `Bearer ${authToken}` : "",
   },
 });
 

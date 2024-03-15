@@ -34,23 +34,13 @@ const Login = () => {
       const response = await customAxios.post("/login", { email, password });
       const { token } = response.data;
 
-      asyncLocalStorage.setItem("authToken", token).then(function(){
-
-        
-        // console.log("que me pario");
-        // let asdsa = localStorage.getItem('authToken');
-        // console.log(asdsa);
-        navigate("/");
-
-
-      });
-
-      // console.log("la puta madre");
-
-      // store userdata
+      localStorage.setItem("authToken", token)
+      
       // const userdataResponse = await customAxios.get("/user");
       // const { userdata } = userdataResponse.data;
       // localStorage.setItem("userdata", JSON.stringify(userdata));
+      
+      navigate("/");
 
     } catch (error) {
       console.error("Error during login:", error);

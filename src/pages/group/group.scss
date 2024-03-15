@@ -1,0 +1,134 @@
+.groupDetail {
+  .header {
+    background-color: var(--bg-black);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .profile {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+
+    .profile .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile .profile-info .profile-top {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .profile .profile-info .profile-top .user-name {
+      color: var(--text-white);
+      font-weight: bold;
+    }
+
+    .profile .profile-info .profile-top .created-at {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .profile .profile-info .profile-bot {
+      align-items: center;
+    }
+
+    .profile .profile-info .profile-bot .breadcrums {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .badges {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 0.75rem;
+    }
+
+    .badges .badge {
+      width: 3.5rem;
+    }
+
+    .title h2 {
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+      color: var(--text-white);
+      font-size: 1.25rem;
+    }
+  }
+
+  .group {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.75rem;
+
+    .group-badges {
+      display: flex;
+      flex-direction: row;
+      gap: 0.75rem;
+    }
+
+    .group-badges .group-badge {
+      background: var(--gradient-1);
+      padding: 0.5rem;
+      border-radius: 8px;
+      color: var(--text-white);
+      font-size: 0.85rem;
+    }
+
+    .group-card {
+      background-color: var(--bg-secondary);
+      padding: 0.75rem;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: row;
+      gap: 0.75rem;
+    }
+
+    .group-card p {
+      padding: 0;
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.25rem;
+    }
+
+    .members {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .group-card .member-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .group-card .member-info .member-name {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .group-card .member-info .member-info {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+  }
+
+  .btn {
+    border: none;
+    width: 100%;
+    background: var(--gradient-1);
+    border-radius: 10px;
+    padding: 1rem 0.25rem;
+    text-align: center;
+    color: var(--text-white);
+    font-size: 1rem;
+  }
+}
