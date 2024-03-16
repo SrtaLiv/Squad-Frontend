@@ -1,6 +1,7 @@
 @import "./style.scss";
 
 .card {
+  
   @include themify($themes) {
     background-color: themed("cardBackground");
     color: themed("cardText");

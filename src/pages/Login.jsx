@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-import customAxios from "../components/CustomAxios";
+import axiosApi from "../api/AxiosApi";
 
 import logo from "../assets/logo.png";
 import google from "../assets/google.png";
@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await customAxios.post("/login", { email, password });
+      const response = await axiosApi.post("/login", { email, password });
       const { token } = response.data;
 
       // clear storage
@@ -36,8 +36,7 @@ const Login = () => {
         sessionStorage.setItem("authToken", token);
       }
         
-      
-      // const userdataResponse = await customAxios.get("/user");
+      // const userdataResponse = await axiosApi.get("/user");
       // const { userdata } = userdataResponse.data;
       // localStorage.setItem("userdata", JSON.stringify(userdata));
       

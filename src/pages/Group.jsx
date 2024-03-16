@@ -2,17 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faUser, faMoon, faXmark, faSun, faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
-// import { DarkModeContext } from "../../context/darkModeContext";
-// import { AuthContext } from "../../context/authContext";
+import AuthGuard from "../components/AuthGuard";
+import axiosApi from "../api/AxiosApi";
+import Navbar from "../components/Navbar";
+
+import Backdrop from "../components/Backdrop";
+import Loader from "../components/Loader";
+
 import { timeAgo } from "../utils/timeUtils";
 import { capFirst } from "../utils/stringUtils";
-
-import AuthGuard from "../components/AuthGuard";
-import customAxios from "../components/CustomAxios";
-import Navbar from "../components/Navbar";
-import Backdrop from "../components/Backdrop";
 
 import logo from "../assets/logo.png";
 import placeholderProfileImg from "../assets/ppl.jpg";
@@ -26,10 +24,13 @@ const Group = () => {
   const [group, setGroup] = useState(null);
   const [error, setError] = useState(null);
 
+  const [loading, setLoading] = useState(true);
+
   const fetchGroup = async () => {
     try {
-      const response = await customAxios.get(`/groups/${ulid}`);
+      const response = await axiosApi.get(`/groups/${ulid}`);
       setGroup(response.data);
+      setLoading(false);
     } catch (error) {
       setError(error.message);
     }
@@ -41,10 +42,6 @@ const Group = () => {
 
   if (error) {
     return <div>Error: {error}</div>;
-  }
-
-  if (!group) {
-    return <Backdrop></Backdrop>;
   }
 
   return (
@@ -61,6 +58,10 @@ const Group = () => {
           <i className="fa-solid fa-gear"></i>
         </button>
       </Navbar>
+
+      {loading ? <Loader /> : ""}
+
+      {group ? ( // await for load
 
       <div className="groupDetail">
         <div className="header">
@@ -140,6 +141,7 @@ const Group = () => {
           </button>
         </div>
       </div>
+      ) : ''}
     </>
   );
 };

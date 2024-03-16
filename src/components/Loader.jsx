@@ -1,10 +1,12 @@
-import React, { useContext, useState } from "react";
+// import React from "react";
 
 import "../styles/loader.scss";
 
 const Loader = () => {
   return (
-    <span className="loader"></span>
+    <div className="loaderContainer">
+      <span className="loader"></span>
+    </div>
   );
 };
 

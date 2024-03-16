@@ -1,11 +1,7 @@
-import React, { useContext, useState } from "react";
-
 import "../styles/backdrop.scss";
 
-const Backdrop = () => {
-  return (
-    <div className="backdrop show"><span className="loader"></span></div>
-  );
+const Backdrop = ({ showBackdrop }) => {
+  return <div className={`backdrop ${showBackdrop ? "show" : ""}`}></div>;
 };
 
 export default Backdrop;

@@ -1,29 +1,25 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import customAxios from "../components/CustomAxios.jsx";
+import axiosApi from "../api/AxiosApi";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faMoon, faXmark, faSun, faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 import placeholderProfileImg from "../assets/ppl.jpg";
 
-import GroupCard from "../components/GroupCard";
 import AuthGuard from "../components/AuthGuard.jsx";
 import Navbar from "../components/Navbar.jsx";
 import Sidenav from "../components/Sidenav.jsx";
-// import Feed from "../components/feed/Feed.jsx";
+import GroupCard from "../components/GroupCard";
+
+import Backdrop from "../components/Backdrop.jsx";
+import Loader from "../components/Loader.jsx";
 
 import { DarkModeContext } from "../context/darkModeContext.jsx";
 
 import "../styles/home.scss";
-import "../styles/feed.scss";
 import "../styles/search.scss";
 import { compile } from "sass";
-
-import Backdrop from "../components/Backdrop.jsx";
-import Loader from "../components/Loader.jsx";
 
 const Home = () => {
   const { darkMode } = useContext(DarkModeContext);
@@ -55,7 +51,7 @@ const Home = () => {
 
     // if no search query, fetch all
     if (!searchInputRef.current.value.trim() || !showSearch) {
-      customAxios
+      axiosApi
         .get(`/groups`)
         .then(async (response) => {
           setGroups(response.data.data);
@@ -69,7 +65,7 @@ const Home = () => {
 
     // debounced 600ms fetch, search query
     timeout.current = setTimeout(() => {
-      customAxios
+      axiosApi
         .get(`/groups?search=${searchQuery}`)
         .then(async (response) => {
           setGroups(response.data.data);
@@ -84,7 +80,7 @@ const Home = () => {
   // === default fetchGroups ===
   // const fetchGroups = async () => {
   //   try {
-  //     const response = await customAxios.get(`/groups?search=${searchQuery}`);
+  //     const response = await axiosApi.get(`/groups?search=${searchQuery}`);
   //     setGroups(response.data.data);
   //     console.log(response);
   //   } catch (error) {
@@ -94,7 +90,6 @@ const Home = () => {
 
   // effect react to serachQuery changes
   useEffect(() => {
-    // setLoading(true);
     fetchGroups();
   }, [searchQuery, showSearch]);
 
@@ -105,13 +100,10 @@ const Home = () => {
   return (
     <>
       <AuthGuard />
+
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
+        <Backdrop showBackdrop={showSidenav} />
         <Sidenav showSidenav={showSidenav} toggleSidenav={toggleSidenav}>
-          <div className="header">
-            <button className="icon-btn" id="close-sidenav-btn" onClick={toggleSidenav}>
-              <i className="fa-solid fa-xmark"></i>
-            </button>
-          </div>
           <div className="profile">
             <img className="profile-image" src={placeholderProfileImg} />
             <label className="profile-name">Nicolal Agustin Lopez</label>
@@ -145,13 +137,13 @@ const Home = () => {
         <Navbar>
           <div className={`default ${showSearch ? "hidden" : ""}`}>
             <button className="icon-btn" onClick={toggleSidenav}>
-              <FontAwesomeIcon icon={faBars} />
+              <i class="fa-solid fa-bars"></i>
             </button>
             <div className="navbar-logo">
               <img src={logo} alt="SQUAD" />
             </div>
             <button className="icon-btn" onClick={toggleSearch}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
+              <i class="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
           {/* end default div wrapper */}
@@ -192,8 +184,8 @@ const Home = () => {
         </Navbar>
 
         <div className="feed">
-
-          {loading ? <Loader></Loader> : ''}
+          
+          {loading ? <Loader /> : ""}
 
           {groups.map((group, index) => (
             <Link to={`/groups/${group.ulid}`} key={group.ulid} style={{ textDecoration: "none", color: "inherit" }}>
@@ -201,7 +193,6 @@ const Home = () => {
             </Link>
           ))}
         </div>
-
       </div>
     </>
   );

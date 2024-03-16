@@ -1,200 +1,31 @@
 @import "./style.scss";
 
-.home {
-        @include themify($themes) {
-        background-color: themed("bg");
-        margin-top: -10px; //solucionar xD
-        }
-    
+.feed {
+  @include themify($themes) {
+    background-color: themed("background");
+  }
+  display: flex;
+  flex-direction: column;
+  // height: 100%;
+  padding: 1rem 0.5rem;
+  gap: 1rem;
 }
-//         .top {
-//             margin: -20px 10px 0 30px;
-//             background-color: var(--bg-black);
-//             display: flex;
-//             flex-direction: row;
-//             justify-content: space-between;
-//             align-items: center;
-//             .profile {
-//                 display: flex;
-//                 flex-direction: row;
-//                 gap: 0.5rem;
-//                 align-items: center;
-  
-//                 img{
-//                     width: 30px;
-//                     height: 30px;
-//                     border-radius: 30px;
-//                 }
-//                 h3{
 
-//                 }
-//                 &:hover{
-//                     color:  gray;
-//                 }
-//             }
-//                 .time{
-//                     display: flex;
-//                     gap: 10px;
-//                 }
-//         }
-//         .info-card{
-//             display: flex;
-//             flex-direction: column;
-//             margin-top: -20px;
-//             margin-left: 30px; //ver q tamanio
-//             h2{
-                
-//             }
-//             p{
-//                 margin-top: -5px;
-//             }
-//         }
-//         .bottom{
-//             display: flex;
-//             flex-direction: row;
-//             justify-content: space-between;
-//             align-items: center;
-//             margin-left: 30px;
-//             .badges {
-//                 display: flex;
-//                 flex-direction: row;
-//                 justify-content: flex-start;
-//                 gap: 0.75rem;
-        
-//                 .badge {
-//                     padding: 0.5rem 1rem;
-//                     border-radius: 5px;
-//                     font-size: 0.85rem;
-//                     font-weight: bold;
-//                 }
-        
-//                 .badge-red {
-//                     color: rgb(255, 255, 255);
-//                     background-color: violet;
-//                 }
-        
-//                 .badge-blue {
-//                     color: lightblue;
-//                     background-color: navy;
-//                 }
-//             }
-//             .members{
-//                 padding: 2px;
-//                 margin: 3px;
-//                 gap: 10px;
-//                 display: flex;
-//                 align-items: center;
-//                 i{
-//                     border: 1px solid;
-//                     border-radius: 500px;
-//                     padding:8px;
-//                     cursor: pointer;
-//                     &:hover {
-//                         background-color: rgb(138, 210, 108);
-//                     }
-//                 }
-//             }
-//         }
-//     }
-        
-        
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@media only screen and (min-width: 990px) {
+  .card {
+    height: 200px;
 
-        //         .profile-info {
-        //             display: flex;
-        //             flex-direction: column;
+    .description {
+      margin: 0;
+    }
+  }
 
-        //             .profile-top {
-        //                 display: flex;
-        //                 flex-direction: row;
-        //                 gap: 0.5rem;
-        //                 align-items: center;
-
-        //                 .user-name {
-        //                     color: var(--text-white);
-        //                     font-weight: bold;
-        //                 }
-
-        //                 .created-at {
-        //                     font-size: 0.75rem;
-        //                     color: var(--text-secondary);
-        //                 }
-        //             }
-
-        //             .profile-bot {
-        //                 align-items: center;
-
-        //                 .breadcrums {
-        //                     font-size: 0.75rem;
-        //                     color: var(--text-secondary);
-        //                 }
-        //             }
-        //         }
-        //     }
-
-        //     .badges {
-        //         display: flex;
-        //         flex-direction: row;
-        //         justify-content: flex-start;
-        //         gap: 0.75rem;
-
-        //         .badge {
-        //             width: 3.5rem;
-        //         }
-        //     }
-
-        //     .title h2 {
-        //         margin: 0;
-        //         padding: 0;
-        //         flex-wrap: wrap;
-        //         color: var(--text-white);
-        //         font-size: 1.25rem;
-        //     }
-        // }
-
-        // .content {
-        //     .card-description {
-        //         padding: 0;
-        //         margin: 0;
-        //         font-size: 1rem;
-        //         line-height: 1.25rem;
-        //     }
-        // }
-
-        // .footer {
-        //     .members {
-        //         display: flex;
-        //         flex-direction: column;
-        //         gap: 0.75rem;
-
-        //         .group-card {
-        //             .member-info {
-        //                 display: flex;
-        //                 flex-direction: column;
-
-        //                 .member-name {
-        //                     font-weight: bold;
-        //                     font-size: 1rem;
-        //                 }
-
-        //                 .member-info {
-        //                     font-size: 0.85rem;
-        //                     color: var(--text-secondary);
-        //                 }
-        //             }
-        //         }
-        //     }
-
-        //     .btn {
-        //         border: none;
-        //         width: 100%;
-        //         background: var(--gradient-1);
-        //         border-radius: 10px;
-        //         padding: 1rem 0.25rem;
-        //         text-align: center;
-        //         color: var(--text-white);
-        //         font-size: 1rem;
-        //     }
-       // }
-//     }
-// }
+  .feed {
+    padding: 1rem;
+    height: unset;
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem 1rem;
+  }
+}
