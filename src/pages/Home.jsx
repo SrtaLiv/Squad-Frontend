@@ -24,74 +24,75 @@ import { compile } from "sass";
 const Home = () => {
   const { darkMode } = useContext(DarkModeContext);
 
-  const [showSidenav, setSideNav] = useState(false); // toggle sidenav
-  function toggleSidenav() {
-    setSideNav(!showSidenav);
-  }
-
+  const [showSidenav, setSidenav] = useState(false); // toggle sidenav
   const [searchQuery, setSerachQuery] = useState(""); // update the search query
   const [showSearch, setSearchNav] = useState(false); // toggle search navbar
+
   const timeout = useRef();
   const searchInputRef = useRef();
-  function toggleSearch() {
-    setSearchNav(!showSearch);
-  }
-  useEffect(() => {
-    if (showSearch) {
-      searchInputRef.current.focus();
-    }
-  }, [showSearch]);
 
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState([]); // fetch groups for the feed
   const [error, setError] = useState(null);
 
-  const fetchGroups = async () => {
-    clearTimeout(timeout.current);
-
-    // if no search query, fetch all
-    if (!searchInputRef.current.value.trim() || !showSearch) {
-      axiosApi
-        .get(`/groups`)
-        .then(async (response) => {
-          setGroups(response.data.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError(error.message);
-        });
-      return;
-    }
-
-    // debounced 600ms fetch, search query
-    timeout.current = setTimeout(() => {
-      axiosApi
-        .get(`/groups?search=${searchQuery}`)
-        .then(async (response) => {
-          setGroups(response.data.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError(error.message);
-        });
-    }, 600);
-  };
-
-  // === default fetchGroups ===
-  // const fetchGroups = async () => {
-  //   try {
-  //     const response = await axiosApi.get(`/groups?search=${searchQuery}`);
-  //     setGroups(response.data.data);
-  //     console.log(response);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
-
-  // effect react to serachQuery changes
   useEffect(() => {
+    let controller = new AbortController();
+
+    const fetchGroups = async () => {
+      clearTimeout(timeout.current);
+
+      // if no search query, fetch all
+      if (!searchInputRef.current.value.trim() || !showSearch) {
+        axiosApi.get(`/groups`, { signal: controller.signal }).then(async (response) => {
+          setGroups(response.data.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(error.message);
+        });
+        return;
+      }
+
+      // debounced 600ms fetch, search query
+      timeout.current = setTimeout(() => {
+        axiosApi.get(`/groups?search=${searchQuery}`, { signal: controller.signal }).then(async (response) => {
+          setGroups(response.data.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(error.message);
+        });
+      }, 600);
+      return;
+
+    };
+    // === default fetchGroups ===
+    // const fetchGroups = async () => {
+    //   try {
+    //     const response = await axiosApi.get(`/groups?search=${searchQuery}`);
+    //     setGroups(response.data.data);
+    //     console.log(response);
+    //   } catch (error) {
+    //     setError(error.message);
+    //   }
+    // };
+
+    // effect react to serachQuery changes
+    setGroups([]);
+    setLoading(true);
+
     fetchGroups();
+    return () => {
+      controller.abort();
+    };
   }, [searchQuery, showSearch]);
+
+  // focus on search input on show
+  useEffect(() => {
+    if (showSearch) {
+      searchInputRef.current.focus();
+    }
+  }, [showSearch]);
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -103,7 +104,7 @@ const Home = () => {
 
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
         <Backdrop showBackdrop={showSidenav} />
-        <Sidenav showSidenav={showSidenav} toggleSidenav={toggleSidenav}>
+        <Sidenav showSidenav={showSidenav} setSidenav={setSidenav}>
           <div className="profile">
             <img className="profile-image" src={placeholderProfileImg} />
             <label className="profile-name">Nicolal Agustin Lopez</label>
@@ -136,14 +137,14 @@ const Home = () => {
 
         <Navbar>
           <div className={`default ${showSearch ? "hidden" : ""}`}>
-            <button className="icon-btn" onClick={toggleSidenav}>
-              <i class="fa-solid fa-bars"></i>
+            <button className="icon-btn" onClick={() => setSidenav(!showSidenav)}>
+              <i className="fa-solid fa-bars"></i>
             </button>
             <div className="navbar-logo">
               <img src={logo} alt="SQUAD" />
             </div>
-            <button className="icon-btn" onClick={toggleSearch}>
-              <i class="fa-solid fa-magnifying-glass"></i>
+            <button className="icon-btn" onClick={() => setSearchNav(!showSearch)}>
+              <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
           {/* end default div wrapper */}
@@ -155,7 +156,7 @@ const Home = () => {
                 </label>
                 <input type="text" name="search" ref={searchInputRef} value={searchQuery} onChange={(e) => setSerachQuery(e.target.value)} placeholder="Buscar..."></input>
               </div>
-              <button className="exit-search icon-btn" onClick={toggleSearch}>
+              <button className="exit-search icon-btn" onClick={() => setSearchNav(!showSearch)}>
                 <i className="fa-solid fa-xmark"></i>
               </button>
             </div>
@@ -184,7 +185,6 @@ const Home = () => {
         </Navbar>
 
         <div className="feed">
-          
           {loading ? <Loader /> : ""}
 
           {groups.map((group, index) => (
