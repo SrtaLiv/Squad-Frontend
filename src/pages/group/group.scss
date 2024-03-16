@@ -1,4 +1,5 @@
 .groupDetail {
+  
   .header {
     background-color: var(--bg-black);
     padding: 1.5rem;
@@ -51,7 +52,7 @@
     }
 
     .badges .badge {
-      width: 3.5rem;
+      max-width: fit-content;
     }
 
     .title h2 {
@@ -73,14 +74,17 @@
       display: flex;
       flex-direction: row;
       gap: 0.75rem;
-    }
 
-    .group-badges .group-badge {
-      background: var(--gradient-1);
-      padding: 0.5rem;
-      border-radius: 8px;
-      color: var(--text-white);
-      font-size: 0.85rem;
+      .group-badge {
+        background: var(--gradient-1);
+        padding: 0.5rem;
+        border-radius: 8px;
+        color: var(--text-white);
+        font-size: 0.85rem;
+        display: flex;
+        gap: 0.25rem;
+      }
+
     }
 
     .group-card {

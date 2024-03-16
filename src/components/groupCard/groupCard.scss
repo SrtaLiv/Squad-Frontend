@@ -29,6 +29,14 @@
       font-size: 1rem;
       padding: 0;
       margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      i {
+        font-size: 0.80rem;
+      }
+
     }
 
     @include themify($themes) {
@@ -79,31 +87,12 @@
         color: var(--text-secondary);
         font-size: 0.9rem;
         font-weight: bold;
+        display: flex;
+        gap: 0.25rem;
+        align-items: center;
       }
     }
   }
 
-  .badge {
-    background-color: gray;
-    border-radius: 15px;
-    padding: 0 0.75rem;
-    height: 30px;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
 
-  .badge .badge-title {
-    font-weight: 500;
-  }
-
-  .badge.badge-red {
-    background-color: #ff9d9d;
-  }
-
-  .badge.badge-blue {
-    background-color: #9dbeff;
-  }
 }

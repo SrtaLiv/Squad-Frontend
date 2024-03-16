@@ -39,6 +39,30 @@ body {
   border-radius: 100%;
 }
 
+.badge {
+  background-color: gray;
+  border-radius: 15px;
+  padding: 0 0.75rem;
+  height: 30px;
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .badge-title {
+    font-weight: 500;
+  }
+
+  &.badge-red {
+    background-color: #ff9d9d;
+  }
+
+  &.badge-blue {
+    background-color: #9dbeff;
+  }
+}
+
 // ========= SCSS THEME VARIABLES ========= //
 $themes: (
   light: (
@@ -47,7 +71,6 @@ $themes: (
     // bgSoft: #f6f3f3,
     // textColorSoft: #c7aeae,
     // border: lightgray,
-    
     background: white,
     cardBackground: var(--bg-secondary),
     cardText: var(--text-black),
@@ -60,7 +83,6 @@ $themes: (
     // bgSoft: #333,
     // textColorSoft: lightgray,
     // border: #444,
-    
     background: #000000,
     cardBackground: var(--bg-dark-2),
     cardText: var(--text-white),

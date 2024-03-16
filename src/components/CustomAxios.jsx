@@ -2,7 +2,8 @@
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-const authToken = localStorage.getItem("authToken");
+// const authToken = localStorage.getItem("authToken");
+const authToken = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
 
 const customAxios = axios.create({
   baseURL: "http://squad.ddns.net/api/v1",

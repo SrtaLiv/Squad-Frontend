@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import customAxios from "../../components/CustomAxios";
 
@@ -20,39 +20,83 @@ import { DarkModeContext } from "../../context/darkModeContext.jsx";
 import "./home.scss";
 import "./feed.scss";
 import "./search.scss";
+import { compile } from "sass";
+
+import Backdrop from "../../components/backdrop/Backdrop.jsx";
+import Loader from "../../components/loader/Loader.jsx";
 
 const Home = () => {
   const { darkMode } = useContext(DarkModeContext);
 
-
-  const [showSearch, setSearchNav] = useState(false);
-  const [groups, setGroups] = useState([]);
-  const [error, setError] = useState(null);
-
-  const [searchParams, setSearchParams] = useState("");
-
-  const [showSidenav, setSideNav] = useState(false);
+  const [showSidenav, setSideNav] = useState(false); // toggle sidenav
   function toggleSidenav() {
     setSideNav(!showSidenav);
   }
 
-  useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const response = await customAxios.get(`/groups?search=${searchParams}`);
-        setGroups(response.data.data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    fetchGroups();
-  }, []);
-
-
+  const [searchQuery, setSerachQuery] = useState(""); // update the search query
+  const [showSearch, setSearchNav] = useState(false); // toggle search navbar
+  const timeout = useRef();
+  const searchInputRef = useRef();
   function toggleSearch() {
     setSearchNav(!showSearch);
   }
+  useEffect(() => {
+    if (showSearch) {
+      searchInputRef.current.focus();
+    }
+  }, [showSearch]);
+
+  const [loading, setLoading] = useState(true);
+  const [groups, setGroups] = useState([]); // fetch groups for the feed
+  const [error, setError] = useState(null);
+
+  const fetchGroups = async () => {
+    clearTimeout(timeout.current);
+
+    // if no search query, fetch all
+    if (!searchInputRef.current.value.trim() || !showSearch) {
+      customAxios
+        .get(`/groups`)
+        .then(async (response) => {
+          setGroups(response.data.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(error.message);
+        });
+      return;
+    }
+
+    // debounced 600ms fetch, search query
+    timeout.current = setTimeout(() => {
+      customAxios
+        .get(`/groups?search=${searchQuery}`)
+        .then(async (response) => {
+          setGroups(response.data.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(error.message);
+        });
+    }, 600);
+  };
+
+  // === default fetchGroups ===
+  // const fetchGroups = async () => {
+  //   try {
+  //     const response = await customAxios.get(`/groups?search=${searchQuery}`);
+  //     setGroups(response.data.data);
+  //     console.log(response);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
+
+  // effect react to serachQuery changes
+  useEffect(() => {
+    // setLoading(true);
+    fetchGroups();
+  }, [searchQuery, showSearch]);
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -99,10 +143,9 @@ const Home = () => {
         </Sidenav>
 
         <Navbar>
-
-          <div className={`default ${showSearch ? 'hidden' : ''}`}>
+          <div className={`default ${showSearch ? "hidden" : ""}`}>
             <button className="icon-btn" onClick={toggleSidenav}>
-              <FontAwesomeIcon icon={faBars} />{" "}
+              <FontAwesomeIcon icon={faBars} />
             </button>
             <div className="navbar-logo">
               <img src={logo} alt="SQUAD" />
@@ -110,45 +153,53 @@ const Home = () => {
             <button className="icon-btn" onClick={toggleSearch}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
-          </div> {/* end default div wrapper */}
-
-          <div className={`search ${showSearch ? 'show' : ''}`}>
+          </div>
+          {/* end default div wrapper */}
+          <div className={`search ${showSearch ? "show" : ""}`}>
             <div className="search-box">
               <div className="search-input">
-                <label className="search-icon"><i className="fa-solid fa-magnifying-glass"></i></label>
-                <input type="text" name="search" value={searchParams} onChange={(e) => setSearchParams(e.target.value)} placeholder="Buscar..."></input>
+                <label className="search-icon">
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </label>
+                <input type="text" name="search" ref={searchInputRef} value={searchQuery} onChange={(e) => setSerachQuery(e.target.value)} placeholder="Buscar..."></input>
               </div>
-              <button className="exit-search icon-btn" onClick={toggleSearch}><i className="fa-solid fa-xmark"></i></button>
+              <button className="exit-search icon-btn" onClick={toggleSearch}>
+                <i className="fa-solid fa-xmark"></i>
+              </button>
             </div>
             <div className="filters-box">
               <div className="filter-dropdown">
-                <label><i className="fa-solid fa-filter"></i></label>
+                <label>
+                  <i className="fa-solid fa-filter"></i>
+                </label>
                 <label>Filtros</label>
-                <label><i className="fa-solid fa-chevron-down"></i></label>
+                <label>
+                  <i className="fa-solid fa-chevron-down"></i>
+                </label>
               </div>
               <div className="filter-dropdown">
-                <label><i className="fa-solid fa-arrow-up-wide-short"></i></label>
+                <label>
+                  <i className="fa-solid fa-arrow-up-wide-short"></i>
+                </label>
                 <label>Orden</label>
-                <label><i className="fa-solid fa-chevron-down"></i></label>
+                <label>
+                  <i className="fa-solid fa-chevron-down"></i>
+                </label>
               </div>
             </div>
-          </div> {/* end search div wrapper */}
-
-
-
+          </div>
+          {/* end search div wrapper */}
         </Navbar>
-        {/* <Feed /> */}
 
         <div className="feed">
-          {groups ? (
-            groups.map((group) => (
-              <Link to={`/groups/${group.ulid}`} key={group.ulid} style={{ textDecoration: "none", color: "inherit" }}>
-                <GroupCard key={group.ulid} group={group} />
-              </Link>
-            ))
-          ) : (
-            <Backdrop></Backdrop>
-          )}
+
+          {loading ? <Loader></Loader> : ''}
+
+          {groups.map((group, index) => (
+            <Link to={`/groups/${group.ulid}`} key={group.ulid} style={{ textDecoration: "none", color: "inherit" }}>
+              <GroupCard key={group.ulid} group={group} index={index} />
+            </Link>
+          ))}
         </div>
 
       </div>

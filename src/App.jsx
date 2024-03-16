@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-
 import AuthGuard from "./components/AuthGuard.jsx";
 
 import Login from "./pages/login/Login.jsx";
+import Logout from "./utils/logout.jsx";
 import Register from "./pages/register/Register.jsx";
 import Home from "./pages/home/Home.jsx";
 import Group from "./pages/group/Group.jsx";
-
 
 // import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 // import { DarkModeContext } from "./context/darkModeContext";
@@ -18,19 +17,19 @@ import Group from "./pages/group/Group.jsx";
 import "./style.scss";
 
 function App() {
-
   // const { darkMode } = useContext(DarkModeContext);
-  
+
   return (
     <Router>
       <Routes>
-        <Route path='/login' element={<Login />} />
-        
-        <Route path='/' element={<Home />} />
-        <Route path='' element={<Home />} />
-        
-        <Route path='/groups/:ulid' element={<Group />} />
-        
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout/>} />
+
+        <Route path="/" element={<Home />} />
+        <Route path="" element={<Home />} />
+
+        <Route path="/groups/:ulid" element={<Group />} />
+
       </Routes>
     </Router>
   );

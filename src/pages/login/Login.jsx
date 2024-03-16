@@ -12,7 +12,12 @@ import "./login.scss";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+
+  const toggleRememberMe = (e) => {
+    setRememberMe(e.target.checked);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +26,16 @@ const Login = () => {
       const response = await customAxios.post("/login", { email, password });
       const { token } = response.data;
 
-      localStorage.setItem("authToken", token)
+      // clear storage
+      localStorage.removeItem("authToken");
+      sessionStorage.removeItem("authToken");
+
+      if(rememberMe){
+        localStorage.setItem("authToken", token);
+      }else{
+        sessionStorage.setItem("authToken", token);
+      }
+        
       
       // const userdataResponse = await customAxios.get("/user");
       // const { userdata } = userdataResponse.data;
@@ -72,7 +86,7 @@ const Login = () => {
 
         <div className="form-options">
           <div className="checkbox-group">
-            <input className="rememberme" type="checkbox" name="rememberme" />
+            <input className="rememberme" type="checkbox" name="rememberme" checked={rememberMe} onChange={toggleRememberMe}/>
             <label className="checkbox-label">Recuerdame</label>
           </div>
           <Link className="forgot" to="/recover">

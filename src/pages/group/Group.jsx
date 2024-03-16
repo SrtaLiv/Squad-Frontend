@@ -6,32 +6,42 @@ import { Link } from "react-router-dom";
 // import { faUser, faMoon, faXmark, faSun, faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 // import { DarkModeContext } from "../../context/darkModeContext";
 // import { AuthContext } from "../../context/authContext";
+import { timeAgo } from "../../utils/timeUtils";
+import { capFirst } from "../../utils/stringUtils";
+
+import AuthGuard from "../../components/AuthGuard";
 import customAxios from "../../components/CustomAxios";
 import Navbar from "../../components/navbar/Navbar";
 import Backdrop from "../../components/backdrop/Backdrop";
 
 import logo from "../../assets/logo.png";
-import profileImg from "../../assets/ppl.jpg";
+import placeholderProfileImg from "../../assets/ppl.jpg";
 
 import "./group.scss";
 
-const Gruop = () => {
+const Group = () => {
   // const { darkMode, toggle } = useContext(DarkModeContext);
   // const { currentUser } = useContext(AuthContext);
   const { ulid } = useParams();
   const [group, setGroup] = useState(null);
+  const [error, setError] = useState(null);
+
+  const fetchGroup = async () => {
+    try {
+      const response = await customAxios.get(`/groups/${ulid}`);
+      setGroup(response.data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   useEffect(() => {
-    const fetchGroup = async () => {
-      try {
-        const response = await customAxios.get(`/groups/${ulid}`);
-        setGroup(response.data);
-      } catch (error) {
-        console.error("Error fetching group: ", error);
-      }
-    };
     fetchGroup();
-  });
+  }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   if (!group) {
     return <Backdrop></Backdrop>;
@@ -39,11 +49,12 @@ const Gruop = () => {
 
   return (
     <>
+      <AuthGuard />
       <Navbar>
         <Link to="/" className="icon-btn">
           <i className="fa-solid fa-chevron-left"></i>
         </Link>
-        <div className="logo">
+        <div className="navbar-logo">
           <img src={logo} />
         </div>
         <button className="icon-btn">
@@ -55,7 +66,7 @@ const Gruop = () => {
         <div className="header">
           <div className="profile">
             <div className="profile-image">
-              <img className="profile-img" src={profileImg} />
+              <img className="profile-img" src={placeholderProfileImg} />
             </div>
             <div className="profile-info">
               <div className="profile-top">
@@ -63,7 +74,7 @@ const Gruop = () => {
                   {group.owner.name} {group.owner.surname}
                 </label>
                 <label className="created-at">
-                  <i className="fa-solid fa-clock"></i> Hace 1 hora
+                  <i className="fa-solid fa-clock"></i> {timeAgo(group.creationDate)}
                 </label>
               </div>
               <div className="profile-bot">
@@ -77,7 +88,7 @@ const Gruop = () => {
           <div className="badges">
             {Object.values(group.tags).map((tag, index) => (
               <div className="badge badge-blue" key={tag}>
-                <label className="badge-title">{tag}</label>
+                <label className="badge-title">{capFirst(tag)}</label>
               </div>
             ))}
           </div>
@@ -91,9 +102,9 @@ const Gruop = () => {
           <div className="group-badges">
             <div className="group-badge">
               <label>
-                <i className={group.facultad == "open" ? "fa-solid fa-lock-open" : "fa-solid fa-lock"}></i>
+                <i className={`fa-solid ${group.privacy == "open" ? "fa-lock-open" : "fa-lock"}`}></i>
               </label>
-              <label>Grupo {group.facultad == "open" ? "abierto" : "cerrado"}</label>
+              <label>Grupo {group.privacy == "open" ? "abierto" : "cerrado"}</label>
             </div>
             <div className="group-badge">
               <label>
@@ -113,19 +124,19 @@ const Gruop = () => {
           <div className="members">
             {Object.values(group.members).map((member, index) => (
               <div className="group-card" key={member.ulid}>
-                <img className="profile-img" src={profileImg} />
+                <img className="profile-img" src={placeholderProfileImg} />
                 <div className="member-info">
                   <label className="member-name">
                     {member.name} {member.surname}
                   </label>
-                  {/* <label className="member-info">Facultad de ciencias exactas - TUDAI</label> */}
+                  <label className="member-info">member.facultad - member.carrera</label>
                 </div>
               </div>
             ))}
           </div>
 
           <button className="btn btn-join">
-            <i className="fa-solid fa-share-from-square"></i> Solicitar unirse
+            <i className="fa-solid fa-share-from-square"></i> {group.privacy == "closed" ? "Solicitar unirse" : "Unirse"}
           </button>
         </div>
       </div>
@@ -133,4 +144,4 @@ const Gruop = () => {
   );
 };
 
-export default Gruop;
+export default Group;
