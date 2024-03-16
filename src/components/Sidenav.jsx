@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 
-import "./sidenav.scss";
+import "../styles/sidenav.scss";
 
 const Sidenav = ({ showSidenav, toggleSidenav, children }) => {
 

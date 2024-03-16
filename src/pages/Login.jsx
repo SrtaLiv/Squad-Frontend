@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-import customAxios from "../../components/CustomAxios";
+import customAxios from "../components/CustomAxios";
 
-import logo from "../../assets/logo.png";
-import google from "../../assets/google.png";
-import facebook from "../../assets/facebook.png";
-import "./login.scss";
+import logo from "../assets/logo.png";
+import google from "../assets/google.png";
+import facebook from "../assets/facebook.png";
+import "../styles/login.scss";
 
 const Login = () => {
   const [email, setEmail] = useState("");

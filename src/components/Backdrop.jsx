@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 
-import "./backdrop.scss";
+import "../styles/backdrop.scss";
 
 const Backdrop = () => {
   return (

@@ -1,29 +1,29 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import customAxios from "../../components/CustomAxios";
+import customAxios from "../components/CustomAxios.jsx";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faMoon, faXmark, faSun, faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-import logo from "../../assets/logo.png";
-import placeholderProfileImg from "../../assets/ppl.jpg";
+import logo from "../assets/logo.png";
+import placeholderProfileImg from "../assets/ppl.jpg";
 
-import GroupCard from "../../components/groupCard/GroupCard";
-import AuthGuard from "../../components/AuthGuard.jsx";
-import Navbar from "../../components/navbar/Navbar.jsx";
-import Sidenav from "../../components/sidenav/Sidenav.jsx";
-// import Feed from "../../components/feed/Feed.jsx";
+import GroupCard from "../components/GroupCard";
+import AuthGuard from "../components/AuthGuard.jsx";
+import Navbar from "../components/Navbar.jsx";
+import Sidenav from "../components/Sidenav.jsx";
+// import Feed from "../components/feed/Feed.jsx";
 
-import { DarkModeContext } from "../../context/darkModeContext.jsx";
+import { DarkModeContext } from "../context/darkModeContext.jsx";
 
-import "./home.scss";
-import "./feed.scss";
-import "./search.scss";
+import "../styles/home.scss";
+import "../styles/feed.scss";
+import "../styles/search.scss";
 import { compile } from "sass";
 
-import Backdrop from "../../components/backdrop/Backdrop.jsx";
-import Loader from "../../components/loader/Loader.jsx";
+import Backdrop from "../components/Backdrop.jsx";
+import Loader from "../components/Loader.jsx";
 
 const Home = () => {
   const { darkMode } = useContext(DarkModeContext);

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import placeholderProfileImg from "../../assets/ppl.jpg";
-import "./groupCard.scss";
+import placeholderProfileImg from "../assets/ppl.jpg";
+import "../styles/groupCard.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faUserGroup, faClock, faCheck, faL } from "@fortawesome/free-solid-svg-icons";
-import { capFirst } from "../../utils/stringUtils";
+import { capFirst } from "../utils/stringUtils";
 
 const GroupCard = ({ group, index }) => {
   // const join = true;

@@ -3,18 +3,18 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import AuthGuard from "./components/AuthGuard.jsx";
 
-import Login from "./pages/login/Login.jsx";
+import Login from "./pages/Login.jsx";
 import Logout from "./utils/logout.jsx";
-import Register from "./pages/register/Register.jsx";
-import Home from "./pages/home/Home.jsx";
-import Group from "./pages/group/Group.jsx";
+// import Register from "./pages/Register.jsx";
+import Home from "./pages/Home.jsx";
+import Group from "./pages/Group.jsx";
 
 // import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 // import { DarkModeContext } from "./context/darkModeContext";
 // import { AuthContext } from "./context/authContext.jsx";
 // import Profile from "./components/profile/Profile.jsx";
 
-import "./style.scss";
+import "./styles/style.scss";
 
 function App() {
   // const { darkMode } = useContext(DarkModeContext);

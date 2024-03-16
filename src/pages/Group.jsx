@@ -6,18 +6,18 @@ import { Link } from "react-router-dom";
 // import { faUser, faMoon, faXmark, faSun, faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 // import { DarkModeContext } from "../../context/darkModeContext";
 // import { AuthContext } from "../../context/authContext";
-import { timeAgo } from "../../utils/timeUtils";
-import { capFirst } from "../../utils/stringUtils";
+import { timeAgo } from "../utils/timeUtils";
+import { capFirst } from "../utils/stringUtils";
 
-import AuthGuard from "../../components/AuthGuard";
-import customAxios from "../../components/CustomAxios";
-import Navbar from "../../components/navbar/Navbar";
-import Backdrop from "../../components/backdrop/Backdrop";
+import AuthGuard from "../components/AuthGuard";
+import customAxios from "../components/CustomAxios";
+import Navbar from "../components/Navbar";
+import Backdrop from "../components/Backdrop";
 
-import logo from "../../assets/logo.png";
-import placeholderProfileImg from "../../assets/ppl.jpg";
+import logo from "../assets/logo.png";
+import placeholderProfileImg from "../assets/ppl.jpg";
 
-import "./group.scss";
+import "../styles/group.scss";
 
 const Group = () => {
   // const { darkMode, toggle } = useContext(DarkModeContext);
