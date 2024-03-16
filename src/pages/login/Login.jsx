@@ -9,19 +9,6 @@ import google from "../../assets/google.png";
 import facebook from "../../assets/facebook.png";
 import "./login.scss";
 
-const asyncLocalStorage = {
-  setItem(key, value) {
-    return Promise.resolve().then(function () {
-      localStorage.setItem(key, value);
-    });
-  },
-  getItem(key) {
-    return Promise.resolve().then(function () {
-      return localStorage.getItem(key);
-    });
-  },
-};
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
