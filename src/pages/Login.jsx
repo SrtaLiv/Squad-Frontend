@@ -5,7 +5,6 @@ import { useNavigate, Link } from "react-router-dom";
 import API_URL from "../Config";
 import axiosApi from "../api/AxiosApi";
 
-
 import logo from "../assets/logo.png";
 import google from "../assets/google.png";
 import facebook from "../assets/facebook.png";
@@ -41,12 +40,12 @@ const Login = () => {
         }
 
         const userdataResponse = await axios({
-          url: `${API_URL}/api/v1/user`, 
-          method: 'get',
+          url: `${API_URL}/api/v1/user`,
+          method: "get",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": token ? `Bearer ${token}` : "",
-          }
+            Authorization: token ? `Bearer ${token}` : "",
+          },
         });
 
         const userdata = userdataResponse.data.data;
@@ -110,8 +109,11 @@ const Login = () => {
         </button>
 
         <div className="third-login">
-          <div className="divider">
+          
+          <div className="legend">
+            <div className="divider"></div>
             <label className="divider-text">o continuar con</label>
+            <div className="divider"></div>
           </div>
 
           <div className="logos">
@@ -120,6 +122,11 @@ const Login = () => {
           </div>
         </div>
       </form>
+
+    <footer className="footer">
+        <label className="copyright">SQUAD / BETA Release v1.24.3.1.0</label>
+      </footer>
+
     </div>
   );
 };

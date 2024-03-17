@@ -1,9 +1,10 @@
 @import "./style.scss";
 
-.login {
-    
+.login,
+.registerForm {
   background-color: #000;
-  height: 100vh !important;
+  min-height: 100vh !important;
+  overflow: hidden;
 
   padding-top: 50%;
   display: flex;
@@ -11,12 +12,16 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 0 2rem;
-  gap: 1rem;
+  padding: 0 1rem;
+  gap: 1.5rem;
+
+  background: linear-gradient(45deg, rgb(8 60 75) 0%, rgba(0, 0, 0, 1) 50%, rgb(3 49 35) 100%);
 
   .logo {
+    display: flex;
+    justify-content: center;
     img {
-      max-width: 300px;
+      max-width: 90%;
     }
   }
 
@@ -26,7 +31,7 @@
     justify-content: center;
     align-items: center;
     color: var(--text-white);
-    // padding: 1rem 0;
+    gap: 0.5rem;
 
     .welcome {
       margin: 0;
@@ -36,6 +41,8 @@
 
     .register {
       color: var(--text-secondary);
+      display: flex;
+      gap: 0.5rem;
     }
 
     .link {
@@ -70,7 +77,7 @@
 
     .input-group input {
       font-size: 1rem;
-      padding: 0 0.85rem;
+      padding: 0 0.5rem;
       background: transparent;
       border: none;
       color: white;
@@ -105,6 +112,7 @@
 
   .login-btn {
     margin: 1rem 0;
+    // margin-top: 5}rem;
     background: var(--bg-white);
     background: var(--gradient-1);
     color: var(--text-white);
@@ -125,20 +133,21 @@
     gap: 2rem;
     width: 90%;
 
-    .divider {
-      width: 100%;
-      border-bottom: 1px solid var(--text-secondary);
-      position: relative;
-    }
+    .legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    .divider .divider-text {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      position: absolute;
-      left: 50%;
-      background-color: black;
-      transform: translateX(-50%) translateY(-60%);
-      padding: 0 0.85rem;
+      .divider {
+        width: 100%;
+        border-bottom: 1px solid var(--text-secondary);
+      }
+      .divider-text {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        width: 100%;
+        padding: 0 0.85rem;
+      }
     }
 
     .logos {
@@ -154,7 +163,7 @@
       width: 2rem;
     }
   }
-  
+
   .footer {
     position: absolute;
     bottom: 0;
@@ -162,12 +171,27 @@
     text-align: center;
     padding-bottom: 1rem;
   }
-  
+
   .footer .copyright {
     font-family: consolas;
     font-size: 0.75rem;
-    color: var(--bg-dark);
+    color: #797979;
   }
-  
 }
 
+.registerForm {
+  .input-group {
+    padding: 0.75rem 0rem;
+    border: none;
+  }
+
+  .already {
+    color: var(--text-secondary);
+    display: flex;
+    gap: 0.5rem;
+  }
+  .link {
+    text-decoration: none;
+    color: var(--text-href);
+  }
+}
