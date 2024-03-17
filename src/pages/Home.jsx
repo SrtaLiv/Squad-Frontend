@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axiosApi from "../api/AxiosApi";
+import axios from "axios";
+import API_URL from "../Config.jsx";
 
 import { Link } from "react-router-dom";
 
@@ -27,6 +29,7 @@ const Home = () => {
   const [showSidenav, setSidenav] = useState(false); // toggle sidenav
   const [searchQuery, setSerachQuery] = useState(""); // update the search query
   const [showSearch, setSearchNav] = useState(false); // toggle search navbar
+  const [user, setUser] = useState([]);
 
   const timeout = useRef();
   const searchInputRef = useRef();
@@ -41,30 +44,46 @@ const Home = () => {
     const fetchGroups = async () => {
       clearTimeout(timeout.current);
 
+      const authToken = localStorage.getItem('authToken');
+
       // if no search query, fetch all
       if (!searchInputRef.current.value.trim() || !showSearch) {
-        axiosApi.get(`/groups`, { signal: controller.signal }).then(async (response) => {
-          setGroups(response.data.data);
-          setLoading(false);
+        
+        axios({
+          url: `${API_URL}/api/v1/groups`, 
+          method: 'get',
+          signal: controller.signal,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": authToken ? `Bearer ${authToken}` : "",
+          }
         })
-        .catch((err) => {
-          setError(error.message);
-        });
+          .then(async (response) => {
+            if (response && response.data) {
+              setGroups(response.data.data);
+              setLoading(false);
+            }
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
         return;
+
       }
 
       // debounced 600ms fetch, search query
       timeout.current = setTimeout(() => {
-        axiosApi.get(`/groups?search=${searchQuery}`, { signal: controller.signal }).then(async (response) => {
-          setGroups(response.data.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError(error.message);
-        });
+        axiosApi
+          .get(`/groups?search=${searchQuery}`, { signal: controller.signal })
+          .then(async (response) => {
+            setGroups(response.data.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
       }, 600);
       return;
-
     };
     // === default fetchGroups ===
     // const fetchGroups = async () => {
@@ -94,9 +113,13 @@ const Home = () => {
     }
   }, [showSearch]);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('userdata')));
+  }, [])
+
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   return (
     <>
@@ -107,7 +130,7 @@ const Home = () => {
         <Sidenav showSidenav={showSidenav} setSidenav={setSidenav}>
           <div className="profile">
             <img className="profile-image" src={placeholderProfileImg} />
-            <label className="profile-name">Nicolal Agustin Lopez</label>
+            <label className="profile-name">{user.name} {user.surname}</label>
           </div>
           <div className="links">
             <div className="section">
@@ -123,14 +146,14 @@ const Home = () => {
               <Link className="link" to="/">
                 <i className="fa-solid fa-gear"></i> Ajustes
               </Link>
-              <Link className="link btn-create-group" href="#">
+              <Link to="/create" className="link btn-create-group">
                 <i className="fa-regular fa-square-plus"></i> Crear grupo
               </Link>
             </div>
             <div className="section">
-              <a className="link" href="/logout">
+              <Link to="/logout" className="link">
                 <i className="fa-solid fa-right-from-bracket"></i> Cerrar sesion
-              </a>
+              </Link>
             </div>
           </div>
         </Sidenav>

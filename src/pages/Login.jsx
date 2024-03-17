@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
+import API_URL from "../Config";
 import axiosApi from "../api/AxiosApi";
+
 
 import logo from "../assets/logo.png";
 import google from "../assets/google.png";
@@ -24,24 +26,34 @@ const Login = () => {
 
     try {
       const response = await axiosApi.post("/login", { email, password });
-      const { token } = response.data;
 
-      // clear storage
-      localStorage.removeItem("authToken");
-      sessionStorage.removeItem("authToken");
+      if (response && response.data) {
+        const { token } = response.data;
 
-      if(rememberMe){
-        localStorage.setItem("authToken", token);
-      }else{
-        sessionStorage.setItem("authToken", token);
+        // clear storage
+        localStorage.removeItem("authToken");
+        sessionStorage.removeItem("authToken");
+
+        if (rememberMe) {
+          localStorage.setItem("authToken", token);
+        } else {
+          sessionStorage.setItem("authToken", token);
+        }
+
+        const userdataResponse = await axios({
+          url: `${API_URL}/api/v1/user`, 
+          method: 'get',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": token ? `Bearer ${token}` : "",
+          }
+        });
+
+        const userdata = userdataResponse.data.data;
+        localStorage.setItem("userdata", JSON.stringify(userdata));
+
+        navigate("/");
       }
-        
-      // const userdataResponse = await axiosApi.get("/user");
-      // const { userdata } = userdataResponse.data;
-      // localStorage.setItem("userdata", JSON.stringify(userdata));
-      
-      navigate("/");
-
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -61,7 +73,7 @@ const Login = () => {
       <div className="header">
         <h2 className="welcome">¡Bienvenido de vuelta!</h2>
         <label className="register">
-          ¿Aun no tienes cuenta?{" "}
+          ¿Aun no tienes cuenta?
           <Link className="link" to="/register">
             Registrate
           </Link>
@@ -85,7 +97,7 @@ const Login = () => {
 
         <div className="form-options">
           <div className="checkbox-group">
-            <input className="rememberme" type="checkbox" name="rememberme" checked={rememberMe} onChange={toggleRememberMe}/>
+            <input className="rememberme" type="checkbox" name="rememberme" checked={rememberMe} onChange={toggleRememberMe} />
             <label className="checkbox-label">Recuerdame</label>
           </div>
           <Link className="forgot" to="/recover">
@@ -93,7 +105,7 @@ const Login = () => {
           </Link>
         </div>
 
-        <button className="login-btn" type="submit">
+        <button className="btn login-btn" type="submit">
           Iniciar sesion <i className="fa-solid fa-right-to-bracket"></i>
         </button>
 

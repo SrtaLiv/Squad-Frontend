@@ -5,9 +5,11 @@ import AuthGuard from "./components/AuthGuard.jsx";
 
 import Login from "./pages/Login.jsx";
 import Logout from "./utils/logout.jsx";
+import Register from "./pages/Register.jsx";
 // import Register from "./pages/Register.jsx";
 import Home from "./pages/Home.jsx";
 import Group from "./pages/Group.jsx";
+import CreateGroup from "./pages/CreateGroup.jsx";
 
 // import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 // import { DarkModeContext } from "./context/darkModeContext";
@@ -25,11 +27,13 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout/>} />
+        <Route path="/register" element={<Register/>} />
 
         <Route path="/" element={<Home />} />
         <Route path="" element={<Home />} />
 
         <Route path="/groups/:ulid" element={<Group />} />
+        <Route path="/create" element={<CreateGroup />} />
 
       </Routes>
     </Router>

@@ -20,10 +20,43 @@
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
+    
 
     .info {
       display: flex;
       flex-direction: column;
+      width: 100%;
+    }
+
+    .owner{
+
+      display: flex;
+      flex-direction: row;
+      gap: 0.25rem;
+      align-items: center;
+
+      .profile-img{
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      .text{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .name{
+        display: flex;
+        justify-content: space-between;
+        @include themify($themes) {
+          &.subtitle {
+            font-size: 0.75rem;
+            color: themed("cardTextMuted");
+          }
+        }
+      }
+
     }
 
     .title {
@@ -44,6 +77,14 @@
       .subtitle {
         font-size: 0.75rem;
         color: themed("cardTextMuted");
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        i{
+          font-size: 0.70rem;
+        }
+
       }
     }
   }

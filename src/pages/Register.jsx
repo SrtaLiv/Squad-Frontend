@@ -1,70 +1,60 @@
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import "../styles/register.scss";
-// // import logo from './logo.png';
-// import google from "/src/assets/google.png";
-// import facebook from "/src/assets/facebook.png";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-// const Register = () => {
-//     const [name, setName] = useState(""); // Estado para el nombre
-//     const [password, setPassword] = useState(""); // Estado para la contraseña
-//     const [email, setEmail] = useState(""); // Estado para el correo electrónico
-    
-//     //es asincrono necesitamos el servi
-//     const submitRegister = async(error) => {
-//         error.preventDefault();
-//     }
+import Backdrop from "../components/Backdrop";
+import Loader from "../components/Loader";
 
-//     return(
-//         <div className="login">
-//             <div className="card">
-//                 <div className="logo">
-//                     <img src={logo} alt="Logo" />
-//                 </div>
+import logo from "../assets/logo.png";
+import "../styles/register.scss";
+import "../styles/forms.scss";
 
-//                 <h1>Únete a Squad</h1>
-                
-//                 <span>Tienes cuenta? <Link to="/login">Inicia sesión</Link></span>
+import placeholderProfileImg from "../assets/ppl.jpg";
 
-//                 <form className="form">
-//                     <div className="input-group">
-//                         <label className="input-icon"><i className="fa-solid fa-envelope"></i></label>
-//                         <input value={name} placeholder="Nombre completo" onChange={(e) => setName(e.target.value)} required/> 
-//                     </div>
+const Register = () => {
+  return (
+    <>
+      <div className="registerContainer">
+        <div className="formContainer">
 
-//                     <div className="input-group">
-//                         <label className="input-icon"><i className="fa-solid fa-envelope"></i></label>
-//                         <input value={email} type="email" name="email" placeholder="Correo electrónico" onChange={(e) => setEmail(e.target.value)} required/>
-//                     </div>
+          <img className="logo" src={logo}></img>
+          <h2><i class="fa-solid fa-user-plus"></i> Crea tu cuenta</h2>
 
-//                     <div className="input-group">
-//                         <label className="input-icon"><i className="fa-solid fa-key"></i></label>
-//                         <input value={password} type="password" placeholder="Contraseña" name="password" onChange={(e) => setPassword(e.target.value)} required/>
-//                     </div>
+          <div className="formInputs">
+            <div className="input-group">
+              <label className="input-title">Email</label>
+              <input type="email" name="email" className="input-control"></input>
+            </div>
 
-//                     <div className="form-options">
-//                         <div className="checkbox-group">
-//                             <input className="rememberme" type="checkbox" name="rememberme" />
-//                             <label className="checkbox-label">Acepto las condiciones we JSJA</label>
-//                         </div>
-//                     </div>
+            <div className="input-group">
+              <label className="input-title">Nombre</label>
+              <input type="text" name="name" className="input-control"></input>
+            </div>
 
-//                     <button className="login-btn" onClick={submitRegister}>Regístrate <i className="fa-solid fa-right-to-bracket"></i></button>
-//                 </form>
+            <div className="input-group">
+              <label className="input-title">Apellido</label>
+              <input type="text" name="surname" className="input-control"></input>
+            </div>
 
-//                 <div className="third-login">
-//                     <div className="divider">
-//                         <label className="divider-text">o continuar con</label>
-//                     </div>
+            <div className="input-group">
+              <label className="input-title">Contraseña</label>
+              <input type="password" name="password" className="input-control"></input>
+            </div>
 
-//                     <div className="logos">
-//                         <img src={google} alt="Google Logo" />
-//                         <img src={facebook} alt="Facebook Logo" />
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
+            <div className="input-group">
+              <label className="input-title">Confirmar contraseña</label>
+              <input type="password" name="password_confirmation" className="input-control"></input>
+            </div>
 
-// export default Register;
+            <button className="btn">
+              Registrarme <i className="fa-solid fa-chevron-right"></i>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Register;

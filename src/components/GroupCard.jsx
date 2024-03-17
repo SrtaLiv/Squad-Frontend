@@ -5,19 +5,35 @@ import "../styles/groupCard.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faUserGroup, faClock, faCheck, faL } from "@fortawesome/free-solid-svg-icons";
 import { capFirst } from "../utils/stringUtils";
+import { timeAgo } from "../utils/timeUtils";
 
 const GroupCard = ({ group, index }) => {
   // const join = true;
   return (
     <div className="card">
       <div className="header">
-        
-        {/* <img className="profile-img" src={group.profilePic} /> */}
-        {/* <img className="profile-img" src={placeholderProfileImg} /> */}
-        {/* TEMP PLACEHOLDER */}
-        <img className="profile-img" src={`https://randomuser.me/api/portraits/thumb/${index % 2 == 0 ? 'men' : 'women'}/${index}.jpg`} /> 
+        {/* <img className="profile-img" src={`https://randomuser.me/api/portraits/thumb/${index % 2 == 0 ? 'men' : 'women'}/${index}.jpg`} /> 
         
         <div className="info">
+          <h2 className="title">{group.title}</h2>
+          <label className="subtitle">
+            {group.facultad} - {group.carrera}
+          </label>
+        </div>
+      </div> */}
+
+        <div className="info">
+          <div className="owner">
+            <img className="profile-img" src={`https://randomuser.me/api/portraits/thumb/${index % 2 == 0 ? "men" : "women"}/${index}.jpg`} />
+            <div className="text">
+              <label className="name subtitle">
+                {group.owner.name} {group.owner.surname}
+              </label>
+              <label className="name subtitle">
+                <i className="fa-solid fa-clock"></i> {timeAgo(group.creationDate)}
+              </label>
+            </div>
+          </div>
           <h2 className="title">{group.title}</h2>
           <label className="subtitle">
             {group.facultad} - {group.carrera}
@@ -46,7 +62,7 @@ const GroupCard = ({ group, index }) => {
           </label>
           <button className="join-btn">
             {/* <i className="fa-solid fa-plus"></i> */}
-            <i className={`fa-solid ${group.privacy == "closed" ? "fa-lock":"fa-lock-open"}`}></i>
+            <i className={`fa-solid ${group.privacy == "closed" ? "fa-lock" : "fa-lock-open"}`}></i>
           </button>
         </div>
       </div>
