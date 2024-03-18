@@ -31,6 +31,7 @@ const Home = () => {
   const [searchQuery, setSerachQuery] = useState(""); // update the search query
   const [showSearch, setSearchNav] = useState(false); // toggle search navbar
   const [user, setUser] = useState([]);
+  const [page, setPage] = useState(1);
 
   const timeout = useRef();
   const searchInputRef = useRef();
@@ -40,6 +41,7 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
     let controller = new AbortController();
 
     const fetchGroups = async () => {
@@ -47,11 +49,11 @@ const Home = () => {
 
       const authToken = localStorage.getItem('authToken');
 
-      // if no search query, fetch all
+      // ==== if search nav is closed ==== //
       if (!searchInputRef.current.value.trim() || !showSearch) {
         
         axios({
-          url: `${API_URL}/api/v1/groups`, 
+          url: `${API_URL}/api/v1/groups?page=${page}`, 
           method: 'get',
           signal: controller.signal,
           headers: {
@@ -61,6 +63,7 @@ const Home = () => {
         })
           .then(async (response) => {
             if (response && response.data) {
+              // setGroups(prev => [...prev, ...response.data.data]); // append
               setGroups(response.data.data);
               setLoading(false);
             }
@@ -69,10 +72,9 @@ const Home = () => {
             console.log(err.message);
           });
         return;
-
       }
 
-      // debounced 600ms fetch, search query
+      // ==== debounce search query 600ms, to avoid api spam ==== //
       timeout.current = setTimeout(() => {
         axiosApi
           .get(`/groups?search=${searchQuery}`, { signal: controller.signal })
@@ -86,41 +88,40 @@ const Home = () => {
       }, 600);
       return;
     };
-    // === default fetchGroups ===
-    // const fetchGroups = async () => {
-    //   try {
-    //     const response = await axiosApi.get(`/groups?search=${searchQuery}`);
-    //     setGroups(response.data.data);
-    //     console.log(response);
-    //   } catch (error) {
-    //     setError(error.message);
-    //   }
-    // };
 
-    // effect react to serachQuery changes
     setGroups([]);
     setLoading(true);
-
     fetchGroups();
+    
     return () => {
       controller.abort();
     };
-  }, [searchQuery, showSearch]);
+  }, [searchQuery, showSearch, page]);
 
-  // focus on search input on show
+  // ====  focus on search input on show ==== //
   useEffect(() => {
     if (showSearch) {
       searchInputRef.current.focus();
     }
   }, [showSearch]);
 
+  // ==== load user data ==== //
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('userdata')));
   }, [])
 
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
+  // ==== lazy load feed ==== //
+  // const handleScroll = () => {
+  //   if(window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight){
+  //     setPage(prev => prev + 1); 
+  //   }
+  // };
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   return (
     <>

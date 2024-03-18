@@ -14,6 +14,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  
   const navigate = useNavigate();
 
   const toggleRememberMe = (e) => {
@@ -65,6 +66,7 @@ const Register = () => {
 
   return (
     <div className="registerForm">
+      
       <div className="logo">
         <img src={logo} alt="SQUAD" />
       </div>
@@ -74,31 +76,36 @@ const Register = () => {
       </div>
 
       <form className="form" onSubmit={handleSubmit}>
-        <div className="input-group">
-          <input className="input-control" type="text" name="email" placeholder="Email" />
+        <div className="input-row">
+          <label>Correo electronico</label>
+          <input className="input-control" type="text" name="email"/>
         </div>
 
-        <div className="input-group">
-          <input className="input-control" type="text" name="username" placeholder="Nombre" />
+        <div className="input-row">
+          <label>Nombre</label>
+          <input className="input-control" type="text" name="username" placeholder="" />
         </div>
 
-        <div className="input-group">
-          <input className="input-control" type="text" name="surname" placeholder="Apellido" />
+        <div className="input-row">
+          <label>Apellido</label>
+          <input className="input-control" type="text" name="surname" placeholder="" />
         </div>
 
-        <div className="input-group">
-          <input className="input-control" type="password" name="password" placeholder="Contraseña" />
+        <div className="input-row">
+          <label>Contraseña</label>
+          <input className="input-control" type="password" name="password" placeholder="" />
         </div>
 
-        <div className="input-group">
-          <input className="input-control" type="password" name="password_confirmation" placeholder="Repite la contraseña" />
+        <div className="input-row">
+          <label>Repite la contraseña</label>
+          <input className="input-control" type="password" name="password_confirmation"/>
         </div>
 
         <button className="btn login-btn" type="submit">
-          Registrarse <i className="fa-solid fa-right-to-bracket"></i>
+          Registrarse <i className="fa-solid fa-chevron-right"></i>
         </button>
 
-        <label className="already">Ya tienes tu cuenta? <Link className="link" to="/login">Inicia sesion</Link></label>
+        <label className="already">¿Ya tienes una cuenta? <Link className="link" to="/login">Inicia sesion</Link></label>
 
       </form>
 

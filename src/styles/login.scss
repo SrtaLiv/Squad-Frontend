@@ -2,10 +2,11 @@
 
 .login,
 .registerForm {
-  background-color: #000;
+
+  background: linear-gradient(45deg, rgb(8 60 75) 0%, rgba(0, 0, 0, 1) 50%, rgb(3 49 35) 100%);
+
   min-height: 100vh !important;
   overflow: hidden;
-
   padding-top: 50%;
   display: flex;
   flex-direction: column;
@@ -14,8 +15,6 @@
   height: 100%;
   padding: 0 1rem;
   gap: 1.5rem;
-
-  background: linear-gradient(45deg, rgb(8 60 75) 0%, rgba(0, 0, 0, 1) 50%, rgb(3 49 35) 100%);
 
   .logo {
     display: flex;
@@ -179,9 +178,40 @@
   }
 }
 
+@media only screen and (min-width: 990px) {
+
+  .login, .registerForm{
+    width: 100%;
+    
+    .logo, .header, .form
+    {
+      max-width: 25%;
+    }
+  }
+}
+
 .registerForm {
-  .input-group {
-    padding: 0.75rem 0rem;
+  
+  .input-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+
+    label{
+      color: var(--text-secondary)
+    }
+
+  }
+
+  .input-control {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--bg-dark);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-size: 1.25rem;
     border: none;
   }
 
