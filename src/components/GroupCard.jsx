@@ -12,32 +12,24 @@ const GroupCard = ({ group, index }) => {
   return (
     <div className="card">
       <div className="header">
-        {/* <img className="profile-img" src={`https://randomuser.me/api/portraits/thumb/${index % 2 == 0 ? 'men' : 'women'}/${index}.jpg`} /> 
-        
-        <div className="info">
-          <h2 className="title">{group.title}</h2>
-          <label className="subtitle">
-            {group.facultad} - {group.carrera}
-          </label>
-        </div>
-      </div> */}
-
         <div className="info">
           <div className="owner">
             <img className="profile-img" src={`https://randomuser.me/api/portraits/thumb/${index % 2 == 0 ? "men" : "women"}/${index}.jpg`} />
             <div className="text">
-              <label className="name subtitle">
-                {group.owner.name} {group.owner.surname}
-              </label>
-              <label className="name subtitle">
-                <i className="fa-solid fa-clock"></i> {timeAgo(group.creationDate)}
+              <span>
+                <label className="subtitle">
+                  {group.owner.name} {group.owner.surname}
+                </label>
+                <label className="subtitle">
+                  <i className="fa-solid fa-clock"></i> {timeAgo(group.creationDate)}
+                </label>
+              </span>
+              <label className="subtitle">
+                {group.facultad} - {group.carrera}
               </label>
             </div>
           </div>
           <h2 className="title">{group.title}</h2>
-          <label className="subtitle">
-            {group.facultad} - {group.carrera}
-          </label>
         </div>
       </div>
 

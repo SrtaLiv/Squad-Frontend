@@ -41,25 +41,23 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-
     let controller = new AbortController();
 
     const fetchGroups = async () => {
       clearTimeout(timeout.current);
 
-      const authToken = localStorage.getItem('authToken');
+      const authToken = localStorage.getItem("authToken");
 
       // ==== if search nav is closed ==== //
       if (!searchInputRef.current.value.trim() || !showSearch) {
-        
         axios({
-          url: `${API_URL}/api/v1/groups?page=${page}`, 
-          method: 'get',
+          url: `${API_URL}/api/v1/groups?page=${page}`,
+          method: "get",
           signal: controller.signal,
           headers: {
             "Content-Type": "application/json",
-            "Authorization": authToken ? `Bearer ${authToken}` : "",
-          }
+            Authorization: authToken ? `Bearer ${authToken}` : "",
+          },
         })
           .then(async (response) => {
             if (response && response.data) {
@@ -92,7 +90,7 @@ const Home = () => {
     setGroups([]);
     setLoading(true);
     fetchGroups();
-    
+
     return () => {
       controller.abort();
     };
@@ -107,13 +105,13 @@ const Home = () => {
 
   // ==== load user data ==== //
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('userdata')));
-  }, [])
+    setUser(JSON.parse(localStorage.getItem("userdata")));
+  }, []);
 
   // ==== lazy load feed ==== //
   // const handleScroll = () => {
   //   if(window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight){
-  //     setPage(prev => prev + 1); 
+  //     setPage(prev => prev + 1);
   //   }
   // };
   // useEffect(() => {
@@ -132,7 +130,9 @@ const Home = () => {
         <Sidenav showSidenav={showSidenav} setSidenav={setSidenav}>
           <div className="profile">
             <img className="profile-image" src={placeholderProfileImg} />
-            <label className="profile-name">{user.name} {user.surname}</label>
+            <label className="profile-name">
+              {user.name} {user.surname}
+            </label>
           </div>
           <div className="links">
             <div className="section">
@@ -208,6 +208,17 @@ const Home = () => {
           </div>
           {/* end search div wrapper */}
         </Navbar>
+
+
+        <div className="feedFilters">
+          <button className="badgeFilter selected">Cursada</button>
+          <button className="badgeFilter selected">Parcial</button>
+          <button className="badgeFilter">Final</button>
+          <button className="badgeFilter">Otro</button>
+          <button className="badgeFilter">Online</button>
+          <button className="badgeFilter">Presencial</button>
+          <button className="badgeFilter">Hibrido</button>
+        </div>
 
         <div className="feed">
           {loading ? <Loader /> : ""}

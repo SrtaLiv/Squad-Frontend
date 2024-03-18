@@ -28,7 +28,6 @@ const Group = () => {
   const [refresh, setRefresh] = useState(false);
 
   const fetchGroup = async () => {
-    
     try {
       const response = await axiosApi.get(`/groups/${ulid}`);
       setGroup(response.data);
@@ -86,13 +85,13 @@ const Group = () => {
                   <label className="user-name">
                     {group.owner.name} {group.owner.surname}
                   </label>
-                  <label className="created-at">
-                    <i className="fa-solid fa-clock"></i> {timeAgo(group.creationDate)}
-                  </label>
                 </div>
                 <div className="profile-bot">
                   <label className="breadcrums">
                     {group.facultad} - {group.carrera}
+                  </label>
+                  <label className="created-at">
+                    <i className="fa-solid fa-clock"></i> {timeAgo(group.creationDate)}
                   </label>
                 </div>
               </div>

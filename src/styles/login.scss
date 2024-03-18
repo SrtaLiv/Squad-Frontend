@@ -1,9 +1,10 @@
 @import "./style.scss";
 
-.login,
+.loginForm,
 .registerForm {
 
-  background: linear-gradient(45deg, rgb(8 60 75) 0%, rgba(0, 0, 0, 1) 50%, rgb(3 49 35) 100%);
+  background-color: #000;
+  background: linear-gradient(-25deg, rgb(4, 42, 53) 0%, rgba(0, 0, 0, 1) 50%, rgb(2, 53, 38) 100%);
 
   min-height: 100vh !important;
   overflow: hidden;

@@ -36,14 +36,21 @@
       align-items: center;
 
       .profile-img{
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 2rem;
+        height: 2rem;
       }
 
       .text{
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: center;
         width: 100%;
+
+        span{
+          display: flex;
+          justify-content: space-between;
+        }
+
       }
 
       .name{

@@ -11,6 +11,30 @@
   gap: 1rem;
 }
 
+.feedFilters {
+  margin: 1rem 0.5rem 0 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  // justify-content: space-between;
+  overflow-x: scroll;
+
+  .badgeFilter {
+    border: 1.5px solid var(--bg-black);
+    color: var(--text-black);
+    // background-color: var(--bg-white);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    gap: 1rem;
+
+    &.selected {
+      color: var(--text-white);
+      background-color: var(--bg-black);
+    }
+  }
+}
+
 @media only screen and (min-width: 990px) {
   .card {
     height: 200px;

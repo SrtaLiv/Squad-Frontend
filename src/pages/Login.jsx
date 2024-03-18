@@ -64,7 +64,7 @@ const Login = () => {
   // };
 
   return (
-    <div className="login">
+    <div className="loginForm">
       <div className="logo">
         <img src={logo} alt="SQUAD" />
       </div>
@@ -109,7 +109,6 @@ const Login = () => {
         </button>
 
         <div className="third-login">
-          
           <div className="legend">
             <div className="divider"></div>
             <label className="divider-text">o continuar con</label>
@@ -123,10 +122,9 @@ const Login = () => {
         </div>
       </form>
 
-    <footer className="footer">
+      <footer className="footer">
         <label className="copyright">SQUAD / BETA Release v1.24.3.1.0</label>
       </footer>
-
     </div>
   );
 };

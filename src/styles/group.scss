@@ -30,13 +30,15 @@
       font-weight: bold;
     }
 
-    .profile .profile-info .profile-top .created-at {
+    .profile .profile-info .created-at {
       font-size: 0.75rem;
       color: var(--text-secondary);
     }
 
     .profile .profile-info .profile-bot {
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
     }
 
     .profile .profile-info .profile-bot .breadcrums {

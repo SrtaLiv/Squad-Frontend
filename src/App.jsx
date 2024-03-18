@@ -16,7 +16,7 @@ import CreateGroup from "./pages/CreateGroup.jsx";
 // import { AuthContext } from "./context/authContext.jsx";
 // import Profile from "./components/profile/Profile.jsx";
 
-import "./styles/style.scss";
+// import "./styles/style.scss";
 
 function App() {
   // const { darkMode } = useContext(DarkModeContext);
