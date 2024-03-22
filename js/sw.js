@@ -1,6 +1,7 @@
-const CACHE_NAME = 'SQUAD';
+const CACHE_NAME = 'squad-cache-v1';
 const urlsToCache = [
-    // '/pwa/',
+    '/offline.html',
+    '/',
     // '/pwa/index.html',
     // '/pwa/css/main.css',
     // '/pwa/js/script.js',
@@ -8,10 +9,14 @@ const urlsToCache = [
     // '/pwa/images/icon.png',
 ];
 
+const offlinePage = '/offline.html';
+
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(urlsToCache))
+            // .then(cache => cache.addAll(urlsToCache))
+            .then(cache => cache.addAll([offlinePage]))
+            
     );
 });
 
@@ -43,7 +48,10 @@ self.addEventListener('fetch', event => {
                             });
 
                         return response;
-                    });
+                    })
+                    .catch(() => {
+                        return caches.match(offlinePage);
+                    })
             })
     );
 });

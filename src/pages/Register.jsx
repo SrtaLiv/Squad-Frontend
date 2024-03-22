@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-import API_URL from "../Config";
-import axiosApi from "../api/AxiosApi";
+// import API_URL from "../Config";
+// import axiosApi from "../api/AxiosApi";
 
 import logo from "../assets/logo.png";
 import google from "../assets/google.png";

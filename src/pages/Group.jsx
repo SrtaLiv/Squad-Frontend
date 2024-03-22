@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import AuthGuard from "../components/AuthGuard";
-import axiosApi from "../api/AxiosApi";
-import Navbar from "../components/Navbar";
+// import AuthGuard from "../services/ProtectedRoute";
+// import axiosApi from "../api/AxiosApi";
+import { fetchGroup, groupRequestAction } from "../services/api.jsx";
 
+import ProtectedRoute from "../services/ProtectedRoute.jsx";
+import Navbar from "../components/Navbar";
 import Backdrop from "../components/Backdrop";
 import Loader from "../components/Loader";
+import Sidenav from "../components/Sidenav.jsx";
 
 import { timeAgo } from "../utils/timeUtils";
 import { capFirst } from "../utils/stringUtils";
@@ -27,38 +30,55 @@ const Group = () => {
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
 
-  const fetchGroup = async () => {
-    try {
-      const response = await axiosApi.get(`/groups/${ulid}`);
-      setGroup(response.data);
-      setLoading(false);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  const handleJoin = async () => {
-    // e.preventDefault();
-
-    try {
-      const response = await axiosApi.get(`/groups/join/${ulid}`);
-      setRefresh(true);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+  const [showSidenav, setSidenav] = useState(false);
 
   useEffect(() => {
-    fetchGroup();
+    let controller = new AbortController();
+
+    setLoading(true);
+
+    const getGroup = async () => {
+      try {
+        const response = await fetchGroup(ulid, controller);
+        setGroup(response);
+        setLoading(false);
+      } catch (error) {
+        console.log("Error fetching group:", error.message);
+      }
+    };
+
+    getGroup();
+
+    return () => {
+      controller.abort();
+    };
   }, [refresh]);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const handleGroupAction = async (e) => {
+    e.preventDefault();
+    let controller = new AbortController();
+
+    let action = group.user.hasJoinRequest ? "cancel" : "join";
+    action = group.user.isMember ? "leave" : action;
+
+    try {
+      const response = await groupRequestAction(ulid, action, controller);
+      setRefresh(!refresh);
+      console.log(response);
+    } catch (error) {
+      console.error(error.message);
+    }
+
+    setSidenav(false);
+  };
+
+  // useEffect(() => {
+  //   fetchGroup();
+  // }, [refresh]);
 
   return (
     <>
-      <AuthGuard />
+      <ProtectedRoute />
       <Navbar>
         <Link to="/" className="icon-btn">
           <i className="fa-solid fa-chevron-left"></i>
@@ -66,10 +86,31 @@ const Group = () => {
         <div className="navbar-logo">
           <img src={logo} />
         </div>
-        <button className="icon-btn">
+        <button className="icon-btn" onClick={() => setSidenav(!showSidenav)}>
           <i className="fa-solid fa-gear"></i>
         </button>
       </Navbar>
+      <Backdrop showBackdrop={showSidenav} />
+      <Sidenav showSidenav={showSidenav} side="right" setSidenav={setSidenav}>
+        {group ? (
+        <div className="links">
+          <div className="section">
+            <Link className="link"># option</Link>
+            <Link className="link"># option</Link>
+            <Link className="link"># option</Link>
+            <Link className="link"># option</Link>
+            <Link className="link"># option</Link>
+          </div>
+          <div className="section">
+            {group.user.isMember ? (
+              <Link className="link red" to="" onClick={handleGroupAction}>
+                <i className="fa-solid fa-person-walking-arrow-right"></i> Salir del grupo
+              </Link>
+            ) : (null)}
+          </div>
+        </div>
+        ) : null }
+      </Sidenav>
 
       {loading ? <Loader /> : ""}
 
@@ -156,12 +197,12 @@ const Group = () => {
                 <i className="fa-solid fa-comments"></i> Abrir chat
               </button>
             ) : group.user.hasJoinRequest ? (
-              <button className="btn btn-join">
+              <button className="btn btn-join" onClick={handleGroupAction}>
                 {/* <i className="fa-solid fa-hourglass-start"></i> Solicitud enviada */}
                 <i className="fa-solid fa-xmark"></i> Cancelar solicitud
               </button>
             ) : (
-              <button className="btn btn-join" onClick={handleJoin}>
+              <button className="btn btn-join" onClick={handleGroupAction}>
                 <i className="fa-solid fa-share-from-square"></i> {group.privacy == "closed" ? "Solicitar unirse" : "Unirse"}
               </button>
             )}

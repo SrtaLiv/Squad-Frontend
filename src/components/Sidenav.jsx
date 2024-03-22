@@ -1,8 +1,8 @@
 import "../styles/sidenav.scss";
 
-const Sidenav = ({ showSidenav, setSidenav, children }) => {
+const Sidenav = ({ showSidenav, setSidenav, side = '', children }) => {
   return (
-    <div className={`sidenav ${showSidenav ? "open" : ""}`}>
+    <div className={`sidenav ${side} ${showSidenav ? "open" : ""}`}>
       <div className="header">
         <button className="icon-btn" id="close-sidenav-btn" onClick={() => setSidenav(!showSidenav)}>
           <i className="fa-solid fa-xmark"></i>

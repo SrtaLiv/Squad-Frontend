@@ -83,6 +83,21 @@ body {
   filter: brightness(0.8);
 }
 
+.filterBadge {
+  border: 1.5px solid var(--bg-black);
+  color: var(--text-black);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  gap: 1rem;
+  transition: 0.5s ease;
+
+  &.selected {
+    color: var(--text-white);
+    background-color: var(--bg-black);
+  }
+}
+
 // ========= SCSS THEME VARIABLES ========= //
 $themes: (
   light: (

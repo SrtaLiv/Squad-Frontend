@@ -1,17 +1,12 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
-import axios from "axios";
-import axiosApi from "../api/AxiosApi";
-import API_URL from "../Config.jsx";
-
 import { Link } from "react-router-dom";
 
-import logo from "../assets/logo.png";
-import placeholderProfileImg from "../assets/ppl.jpg";
+import { fetchGroups } from "../services/api.jsx";
 
-import AuthGuard from "../components/AuthGuard.jsx";
+import ProtectedRoute from "../services/ProtectedRoute.jsx";
 import Navbar from "../components/Navbar.jsx";
+import Tag from "../components/Tag.jsx";
 import Sidenav from "../components/Sidenav.jsx";
 import GroupCard from "../components/GroupCard";
 
@@ -20,6 +15,8 @@ import Loader from "../components/Loader.jsx";
 
 import { DarkModeContext } from "../context/darkModeContext.jsx";
 
+import logo from "../assets/logo.png";
+import placeholderProfileImg from "../assets/ppl.jpg";
 import "../styles/home.scss";
 import "../styles/search.scss";
 import { compile } from "sass";
@@ -32,81 +29,72 @@ const Home = () => {
   const [showSearch, setSearchNav] = useState(false); // toggle search navbar
   const [user, setUser] = useState([]);
   const [page, setPage] = useState(1);
+  const [selectedTags, setTags] = useState([]);
+  const tags = [];
 
-  const timeout = useRef();
+  const timeoutRef = useRef(null);
   const searchInputRef = useRef();
 
-  const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState([]); // fetch groups for the feed
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
     let controller = new AbortController();
-
-    const fetchGroups = async () => {
-      clearTimeout(timeout.current);
-
-      const authToken = localStorage.getItem("authToken");
-
-      // ==== if search nav is closed ==== //
-      if (!searchInputRef.current.value.trim() || !showSearch) {
-        axios({
-          url: `${API_URL}/api/v1/groups?page=${page}`,
-          method: "get",
-          signal: controller.signal,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: authToken ? `Bearer ${authToken}` : "",
-          },
-        })
-          .then(async (response) => {
-            if (response && response.data) {
-              // setGroups(prev => [...prev, ...response.data.data]); // append
-              setGroups(response.data.data);
-              setLoading(false);
-            }
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        return;
-      }
-
-      // ==== debounce search query 600ms, to avoid api spam ==== //
-      timeout.current = setTimeout(() => {
-        axiosApi
-          .get(`/groups?search=${searchQuery}`, { signal: controller.signal })
-          .then(async (response) => {
-            setGroups(response.data.data);
-            setLoading(false);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-      }, 600);
-      return;
-    };
-
     setGroups([]);
     setLoading(true);
-    fetchGroups();
+
+    const getGroups = async () => {
+      try {
+        setSerachQuery(showSearch ? searchQuery : ''); // only search if search is open
+        const groupsData = await fetchGroups(searchQuery, '', page, controller);
+        setGroups(groupsData.data);
+        setLoading(false);
+      } catch (error) {
+        console.log("Error fetching groups:", error.message);
+      }
+    };
+
+    // if search query, debounce 600ms to avoid api abuse
+    if (searchQuery) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(getGroups, 600);
+    } else {
+      getGroups();
+    }
 
     return () => {
       controller.abort();
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     };
+
   }, [searchQuery, showSearch, page]);
 
-  // ====  focus on search input on show ==== //
+  
   useEffect(() => {
     if (showSearch) {
-      searchInputRef.current.focus();
+      searchInputRef.current.focus(); // focus on search input on show
     }
   }, [showSearch]);
 
   // ==== load user data ==== //
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("userdata")));
-  }, []);
+  // useEffect(() => {
+  //   setUser(JSON.parse(localStorage.getItem("userdata")));
+  // }, []);
+
+  const handleTagChange = (tag) => {
+    if (selectedTags.includes(tag)) {
+      setTags(selectedTags.filter((t) => t !== tag));
+    } else {
+      setTags([...selectedTags, tag]);
+    }
+    console.log(selectedTags);
+  };
 
   // ==== lazy load feed ==== //
   // const handleScroll = () => {
@@ -123,16 +111,14 @@ const Home = () => {
 
   return (
     <>
-      <AuthGuard />
+      <ProtectedRoute />
 
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
         <Backdrop showBackdrop={showSidenav} />
         <Sidenav showSidenav={showSidenav} setSidenav={setSidenav}>
           <div className="profile">
             <img className="profile-image" src={placeholderProfileImg} />
-            <label className="profile-name">
-              {user.name} {user.surname}
-            </label>
+            <label className="profile-name">{/* {user.name} {user.surname} */}</label>
           </div>
           <div className="links">
             <div className="section">
@@ -209,15 +195,33 @@ const Home = () => {
           {/* end search div wrapper */}
         </Navbar>
 
-
         <div className="feedFilters">
-          <button className="badgeFilter selected">Cursada</button>
-          <button className="badgeFilter selected">Parcial</button>
-          <button className="badgeFilter">Final</button>
-          <button className="badgeFilter">Otro</button>
-          <button className="badgeFilter">Online</button>
-          <button className="badgeFilter">Presencial</button>
-          <button className="badgeFilter">Hibrido</button>
+          {/* <button className="filterBadge selected">Cursada</button>
+          <button className="filterBadge selected">Parcial</button>
+          <button className="filterBadge">Final</button>
+          <button className="filterBadge">Otro</button>
+          <button className="filterBadge">Online</button>
+          <button className="filterBadge">Presencial</button>
+          <button className="filterBadge">Hibrido</button> */}
+
+          <Tag value="cursada" tags={tags} setTags={handleTagChange}>
+            Cursada
+          </Tag>
+          <Tag value="parcial" tags={tags} setTags={handleTagChange}>
+            Parcial
+          </Tag>
+          <Tag value="final" tags={tags} setTags={handleTagChange}>
+            Final
+          </Tag>
+          <Tag value="online" tags={tags} setTags={handleTagChange}>
+            Online
+          </Tag>
+          <Tag value="presencial" tags={tags} setTags={handleTagChange}>
+            Presencial
+          </Tag>
+          <Tag value="hibrido" tags={tags} setTags={handleTagChange}>
+            Hibrido
+          </Tag>
         </div>
 
         <div className="feed">
