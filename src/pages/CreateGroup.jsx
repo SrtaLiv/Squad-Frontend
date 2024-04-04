@@ -43,7 +43,7 @@ const CreateGroup = () => {
 
   return (
     <>
-      <AuthGuard />
+
       <Navbar>
         <div className="icon-btn void"></div>
         <div className="navbar-logo">

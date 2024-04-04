@@ -26,8 +26,9 @@ async function fetchGroups(search = "", tags = "", page = 1, controller) {
   if (search) {
     url += `&search=${search}`;
   }
-  if (tags) {
-    url += `&tags=${tags}`;
+  if (tags.length > 0) {
+    let tagsStr = tags.join(',');
+    url += `&tags=${tagsStr}`;
   }
 
   const response = await fetch(url, {

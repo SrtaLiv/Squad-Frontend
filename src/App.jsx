@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ProtectedRoute from "./services/ProtectedRoute.jsx";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import Offline from './pages/Offline.jsx';
 import Login from "./pages/Login.jsx";
 import Logout from "./utils/logout.jsx";
 import Register from "./pages/Register.jsx";
@@ -27,7 +27,7 @@ function App() {
 
         <Route path="/groups/:ulid" element={<Group />} />
         <Route exact path="/create" element={<CreateGroup />} />
-
+        
       </Routes>
     </Router>
   );

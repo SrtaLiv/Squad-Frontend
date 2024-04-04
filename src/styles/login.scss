@@ -1,10 +1,32 @@
 @import "./style.scss";
 
+.bg {
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+
+  &.bg-top {
+    top: 0;
+    opacity: 50%;
+  }
+
+  &.bg-bot {
+    bottom: 0;
+    opacity: 50%;
+  }
+
+  &.black{
+    z-index: -2;
+    background-color: #000;
+    height: 100%;
+  }
+
+}
+
 .loginForm,
 .registerForm {
-
-  background-color: #000;
-  background: linear-gradient(-25deg, rgb(4, 42, 53) 0%, rgba(0, 0, 0, 1) 50%, rgb(2, 53, 38) 100%);
+  // background-color: #000;
+  // background: linear-gradient(-25deg, rgb(4, 42, 53) 0%, rgba(0, 0, 0, 1) 50%, rgb(2, 53, 38) 100%);
 
   min-height: 100vh !important;
   overflow: hidden;
@@ -25,7 +47,7 @@
     }
   }
 
-  .errorMessage{
+  .errorMessage {
     color: red;
   }
 
@@ -184,29 +206,28 @@
 }
 
 @media only screen and (min-width: 990px) {
-
-  .login, .registerForm{
+  .login,
+  .registerForm {
     width: 100%;
-    
-    .logo, .header, .form
-    {
+
+    .logo,
+    .header,
+    .form {
       max-width: 25%;
     }
   }
 }
 
 .registerForm {
-  
   .input-row {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     width: 100%;
 
-    label{
-      color: var(--text-secondary)
+    label {
+      color: var(--text-secondary);
     }
-
   }
 
   .input-control {

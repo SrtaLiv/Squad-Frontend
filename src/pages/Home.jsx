@@ -29,8 +29,7 @@ const Home = () => {
   const [showSearch, setSearchNav] = useState(false); // toggle search navbar
   const [user, setUser] = useState([]);
   const [page, setPage] = useState(1);
-  const [selectedTags, setTags] = useState([]);
-  const tags = [];
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const timeoutRef = useRef(null);
   const searchInputRef = useRef();
@@ -39,16 +38,17 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  const tags = ["cursada", "parcial", "final", "online", "presencial", "hibrido", "otro"];
 
+  useEffect(() => {
     let controller = new AbortController();
     setGroups([]);
     setLoading(true);
 
     const getGroups = async () => {
       try {
-        setSerachQuery(showSearch ? searchQuery : ''); // only search if search is open
-        const groupsData = await fetchGroups(searchQuery, '', page, controller);
+        setSerachQuery(showSearch ? searchQuery : ""); // only search if search is open
+        const groupsData = await fetchGroups(searchQuery, selectedTags, page, controller);
         setGroups(groupsData.data);
         setLoading(false);
       } catch (error) {
@@ -72,14 +72,13 @@ const Home = () => {
         clearTimeout(timeoutRef.current);
       }
     };
+  }, [searchQuery, showSearch, page, selectedTags]);
 
-  }, [searchQuery, showSearch, page]);
-
-  
   useEffect(() => {
     if (showSearch) {
       searchInputRef.current.focus(); // focus on search input on show
     }
+
   }, [showSearch]);
 
   // ==== load user data ==== //
@@ -87,13 +86,12 @@ const Home = () => {
   //   setUser(JSON.parse(localStorage.getItem("userdata")));
   // }, []);
 
-  const handleTagChange = (tag) => {
-    if (selectedTags.includes(tag)) {
-      setTags(selectedTags.filter((t) => t !== tag));
+  const handleTagClick = (value) => {
+    if (selectedTags.includes(value)) {
+      setSelectedTags(selectedTags.filter((tag) => tag !== value));
     } else {
-      setTags([...selectedTags, tag]);
-    }
-    console.log(selectedTags);
+      setSelectedTags([...selectedTags, value]);
+    };
   };
 
   // ==== lazy load feed ==== //
@@ -204,24 +202,25 @@ const Home = () => {
           <button className="filterBadge">Presencial</button>
           <button className="filterBadge">Hibrido</button> */}
 
-          <Tag value="cursada" tags={tags} setTags={handleTagChange}>
-            Cursada
-          </Tag>
-          <Tag value="parcial" tags={tags} setTags={handleTagChange}>
+          {tags.map((value) => (
+            <Tag value={value} key={value} isSelected={selectedTags.includes(value)} onClick={() => handleTagClick(value)} />
+          ))}
+
+          {/* <Tag value="parcial" tags={tags} setTags={handleTagClick}>
             Parcial
           </Tag>
-          <Tag value="final" tags={tags} setTags={handleTagChange}>
+          <Tag value="final" tags={tags} setTags={handleTagClick}>
             Final
           </Tag>
-          <Tag value="online" tags={tags} setTags={handleTagChange}>
+          <Tag value="online" tags={tags} setTags={handleTagClick}>
             Online
           </Tag>
-          <Tag value="presencial" tags={tags} setTags={handleTagChange}>
+          <Tag value="presencial" tags={tags} setTags={handleTagClick}>
             Presencial
           </Tag>
-          <Tag value="hibrido" tags={tags} setTags={handleTagChange}>
+          <Tag value="hibrido" tags={tags} setTags={handleTagClick}>
             Hibrido
-          </Tag>
+          </Tag> */}
         </div>
 
         <div className="feed">

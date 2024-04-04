@@ -6,6 +6,8 @@ import { useNavigate, Link } from "react-router-dom";
 // import axiosApi from "../api/AxiosApi";
 
 import logo from "../assets/logo.png";
+import bgTop from "../assets/bg_top.jpg";
+import bgBot from "../assets/bg_bot.jpg";
 import google from "../assets/google.png";
 import facebook from "../assets/facebook.png";
 import "../styles/login.scss";
@@ -14,7 +16,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  
+
   const navigate = useNavigate();
 
   const toggleRememberMe = (e) => {
@@ -65,54 +67,64 @@ const Register = () => {
   // };
 
   return (
-    <div className="registerForm">
-      
-      <div className="logo">
-        <img src={logo} alt="SQUAD" />
+    <>
+      {/* perma-temporal ? */}
+      <img className="bg bg-top" src={bgTop}></img>
+      <img className="bg bg-bot" src={bgBot}></img>
+      <div className="bg black"></div>
+
+      <div className="registerForm">
+        <div className="logo">
+          <img src={logo} alt="SQUAD" />
+        </div>
+
+        <div className="header">
+          <h2 className="welcome">Vamos a crear tu cuenta</h2>
+        </div>
+
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="input-row">
+            <label>Correo electronico</label>
+            <input className="input-control" type="text" name="email" />
+          </div>
+
+          <div className="input-row">
+            <label>Nombre</label>
+            <input className="input-control" type="text" name="username" placeholder="" />
+          </div>
+
+          <div className="input-row">
+            <label>Apellido</label>
+            <input className="input-control" type="text" name="surname" placeholder="" />
+          </div>
+
+          <div className="input-row">
+            <label>Contraseña</label>
+            <input className="input-control" type="password" name="password" placeholder="" />
+          </div>
+
+          <div className="input-row">
+            <label>Repite la contraseña</label>
+            <input className="input-control" type="password" name="password_confirmation" />
+          </div>
+
+          <button className="btn login-btn" type="submit">
+            Registrarse <i className="fa-solid fa-chevron-right"></i>
+          </button>
+
+          <label className="already">
+            ¿Ya tienes una cuenta?{" "}
+            <Link className="link" to="/login">
+              Inicia sesion
+            </Link>
+          </label>
+        </form>
+
+        <footer className="footer">
+          <label className="copyright">SQUAD / BETA Release v1.24.3.1.0</label>
+        </footer>
       </div>
-
-      <div className="header">
-        <h2 className="welcome">Vamos a crear tu cuenta</h2>
-      </div>
-
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="input-row">
-          <label>Correo electronico</label>
-          <input className="input-control" type="text" name="email"/>
-        </div>
-
-        <div className="input-row">
-          <label>Nombre</label>
-          <input className="input-control" type="text" name="username" placeholder="" />
-        </div>
-
-        <div className="input-row">
-          <label>Apellido</label>
-          <input className="input-control" type="text" name="surname" placeholder="" />
-        </div>
-
-        <div className="input-row">
-          <label>Contraseña</label>
-          <input className="input-control" type="password" name="password" placeholder="" />
-        </div>
-
-        <div className="input-row">
-          <label>Repite la contraseña</label>
-          <input className="input-control" type="password" name="password_confirmation"/>
-        </div>
-
-        <button className="btn login-btn" type="submit">
-          Registrarse <i className="fa-solid fa-chevron-right"></i>
-        </button>
-
-        <label className="already">¿Ya tienes una cuenta? <Link className="link" to="/login">Inicia sesion</Link></label>
-
-      </form>
-
-      <footer className="footer">
-        <label className="copyright">SQUAD / BETA Release v1.24.3.1.0</label>
-      </footer>
-    </div>
+    </>
   );
 };
 

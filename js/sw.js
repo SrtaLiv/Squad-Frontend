@@ -1,7 +1,8 @@
 const CACHE_NAME = 'squad-cache-v1';
+
 const urlsToCache = [
-    '/offline.html',
-    '/',
+    '/offline',
+    // '/',
     // '/pwa/index.html',
     // '/pwa/css/main.css',
     // '/pwa/js/script.js',
@@ -9,14 +10,10 @@ const urlsToCache = [
     // '/pwa/images/icon.png',
 ];
 
-const offlinePage = '/offline.html';
-
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            // .then(cache => cache.addAll(urlsToCache))
-            .then(cache => cache.addAll([offlinePage]))
-            
+            .then(cache => cache.addAll(urlsToCache))
     );
 });
 
@@ -76,7 +73,7 @@ self.addEventListener('push', function (event) {
     const options = {
         body: event.data.text(),
         icon: '/images/logo.png',
-        badge: '/images/logo.pngg'
+        badge: '/images/logo.png'
     };
 
     event.waitUntil(self.registration.showNotification('Push Notification', options));
