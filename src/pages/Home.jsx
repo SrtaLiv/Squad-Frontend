@@ -193,35 +193,12 @@ const Home = () => {
           {/* end search div wrapper */}
         </Navbar>
 
-        <div className="feedFilters">
-          {/* <button className="filterBadge selected">Cursada</button>
-          <button className="filterBadge selected">Parcial</button>
-          <button className="filterBadge">Final</button>
-          <button className="filterBadge">Otro</button>
-          <button className="filterBadge">Online</button>
-          <button className="filterBadge">Presencial</button>
-          <button className="filterBadge">Hibrido</button> */}
-
+        {/* removed temporarely */}
+        {/* <div className="feedFilters">
           {tags.map((value) => (
             <Tag value={value} key={value} isSelected={selectedTags.includes(value)} onClick={() => handleTagClick(value)} />
           ))}
-
-          {/* <Tag value="parcial" tags={tags} setTags={handleTagClick}>
-            Parcial
-          </Tag>
-          <Tag value="final" tags={tags} setTags={handleTagClick}>
-            Final
-          </Tag>
-          <Tag value="online" tags={tags} setTags={handleTagClick}>
-            Online
-          </Tag>
-          <Tag value="presencial" tags={tags} setTags={handleTagClick}>
-            Presencial
-          </Tag>
-          <Tag value="hibrido" tags={tags} setTags={handleTagClick}>
-            Hibrido
-          </Tag> */}
-        </div>
+        </div> */}
 
         <div className="feed">
           {loading ? <Loader /> : ""}

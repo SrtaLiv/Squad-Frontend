@@ -1,70 +1,40 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-// import API_URL from "../Config";
-// import axiosApi from "../api/AxiosApi";
+import { register as apiRegister } from "../services/api";
 
 import logo from "../assets/logo.png";
 import bgTop from "../assets/bg_top.jpg";
 import bgBot from "../assets/bg_bot.jpg";
-import google from "../assets/google.png";
-import facebook from "../assets/facebook.png";
+
 import "../styles/login.scss";
 
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [registerFormData, setRegisterFormData] = useState({});
 
   const navigate = useNavigate();
-
-  const toggleRememberMe = (e) => {
-    setRememberMe(e.target.checked);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axiosApi.post("/login", { email, password });
-
-      if (response && response.data) {
-        const { token } = response.data;
-
-        // clear storage
-        localStorage.removeItem("authToken");
-        sessionStorage.removeItem("authToken");
-
-        if (rememberMe) {
-          localStorage.setItem("authToken", token);
-        } else {
-          sessionStorage.setItem("authToken", token);
-        }
-
-        const userdataResponse = await axios({
-          url: `${API_URL}/api/v1/user`,
-          method: "get",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
-        });
-
-        const userdata = userdataResponse.data.data;
-        localStorage.setItem("userdata", JSON.stringify(userdata));
-
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
+    const response = await apiRegister(registerFormData);
+    
+    if (response.status === 200) {
+      alert("debug: user registered successfully!");
+      navigate("/login");
+    } else {
+      alert("debug: user registration failed. ("+response.error.code+")");
     }
+
+    console.log(response);
+
   };
 
-  // const { login } = useContext(AuthContext);
-  // const handleLogin = () => {
-  //   login();
-  // };
+  // update register form data values
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setRegisterFormData({ ...registerFormData, [name]: value });
+  };
 
   return (
     <>
@@ -85,27 +55,27 @@ const Register = () => {
         <form className="form" onSubmit={handleSubmit}>
           <div className="input-row">
             <label>Correo electronico</label>
-            <input className="input-control" type="text" name="email" />
+            <input className="input-control" type="email" name="email" value={registerFormData.email} onChange={handleInputChange} />
           </div>
 
           <div className="input-row">
             <label>Nombre</label>
-            <input className="input-control" type="text" name="username" placeholder="" />
+            <input className="input-control" type="text" name="name" value={registerFormData.name} onChange={handleInputChange} placeholder="" />
           </div>
 
           <div className="input-row">
             <label>Apellido</label>
-            <input className="input-control" type="text" name="surname" placeholder="" />
+            <input className="input-control" type="text" name="surname" value={registerFormData.surname} onChange={handleInputChange} placeholder="" />
           </div>
 
           <div className="input-row">
             <label>Contraseña</label>
-            <input className="input-control" type="password" name="password" placeholder="" />
+            <input className="input-control" type="password" name="password" value={registerFormData.password} onChange={handleInputChange} placeholder="" />
           </div>
 
           <div className="input-row">
             <label>Repite la contraseña</label>
-            <input className="input-control" type="password" name="password_confirmation" />
+            <input className="input-control" type="password" name="password_confirmation" value={registerFormData.password_confirmation} onChange={handleInputChange} />
           </div>
 
           <button className="btn login-btn" type="submit">

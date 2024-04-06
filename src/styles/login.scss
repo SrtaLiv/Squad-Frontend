@@ -15,12 +15,11 @@
     opacity: 50%;
   }
 
-  &.black{
+  &.black {
     z-index: -2;
     background-color: #000;
     height: 100%;
   }
-
 }
 
 .loginForm,
@@ -36,8 +35,27 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 0 1rem;
+  padding: 0 2.5rem;
   gap: 1.5rem;
+
+  .form-input-control {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: transparent;
+    width: 100%;
+    font-size: 1.25rem;
+    padding: 0.75rem 0;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-bottom: 1px solid #9a9284;
+
+    &:focus-within{
+      outline: none !important;
+    }
+
+  }
 
   .logo {
     display: flex;

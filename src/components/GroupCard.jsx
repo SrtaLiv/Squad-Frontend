@@ -10,55 +10,59 @@ import { timeAgo } from "../utils/timeUtils";
 const GroupCard = ({ group, index }) => {
   // const join = true;
   return (
-    <div className="card">
-      <div className="header">
-        <div className="info">
-          <div className="owner">
-            <img className="profile-img" src={`https://randomuser.me/api/portraits/thumb/${index % 2 == 0 ? "men" : "women"}/${index}.jpg`} />
-            <div className="text">
-              <span>
+    <>
+      {/* <ProtectedRoute /> */}
+      <div className="card">
+        <div className="header">
+          <div className="info">
+            <div className="owner">
+              <img className="profile-img" src={`https://randomuser.me/api/portraits/thumb/${index % 2 == 0 ? "men" : "women"}/${index}.jpg`} />
+              <div className="text">
+                <span>
+                  <label className="subtitle">
+                    {group.owner.name} {group.owner.surname}
+                  </label>
+                  <label className="subtitle">
+                    <i className="fa-solid fa-clock"></i> {timeAgo(group.creationDate)}
+                  </label>
+                </span>
                 <label className="subtitle">
-                  {group.owner.name} {group.owner.surname}
+                  {group.facultad} - {group.carrera}
                 </label>
-                <label className="subtitle">
-                  <i className="fa-solid fa-clock"></i> {timeAgo(group.creationDate)}
-                </label>
-              </span>
-              <label className="subtitle">
-                {group.facultad} - {group.carrera}
-              </label>
+              </div>
             </div>
+            <h2 className="title">{group.title}</h2>
           </div>
-          <h2 className="title">{group.title}</h2>
         </div>
-      </div>
 
-      <div className="content">
-        <p className="description">{group.description}</p>
-      </div>
+        <div className="content">
+          <p className="description">{group.description}</p>
+        </div>
 
-      <div className="footer">
-        <div className="badges">
-          {Object.values(group.tags).map((tag, index) => (
+        <div className="footer">
+          {/* removed temporarely */}
+          <div className="badges">
+            {/* {Object.values(group.tags).map((tag, index) => (
             <div className="badge badge-blue" key={tag}>
               <label className="badge-title">{capFirst(tag)}</label>
             </div>
-          ))}
-        </div>
+          ))} */}
+          </div>
 
-        <div className="options">
-          <label className="members">
-            <i className="fa-solid fa-user-group"></i>
-            {group.membersCount}
-            {group.maxMembers != null ? " / " + group.maxMembers : ""}
-          </label>
-          <button className="join-btn">
-            {/* <i className="fa-solid fa-plus"></i> */}
-            <i className={`fa-solid ${group.privacy == "closed" ? "fa-lock" : "fa-lock-open"}`}></i>
-          </button>
+          <div className="options">
+            <label className="members">
+              <i className="fa-solid fa-user-group"></i>
+              {group.membersCount}
+              {group.maxMembers != null ? " / " + group.maxMembers : ""}
+            </label>
+            <button className="join-btn">
+              {/* <i className="fa-solid fa-plus"></i> */}
+              <i className={`fa-solid ${group.privacy == "closed" ? "fa-lock" : "fa-lock-open"}`}></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

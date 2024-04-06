@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
 // import API_URL from "../Config";
@@ -17,9 +16,10 @@ import facebook from "../assets/facebook.png";
 import "../styles/login.scss";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const [loginFormData, setLoginFormData] = useState({});
   const [rememberMe, setRememberMe] = useState(false);
+
   const [error, setError] = useState();
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const response = await apiLogin(email, password);
+    const response = await apiLogin(loginFormData);
     if (response.token) {
       setToken(response.token, rememberMe);
       navigate("/");
@@ -47,6 +47,11 @@ const Login = () => {
           break;
       }
     }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setLoginFormData({ ...loginFormData, [name]: value });
   };
 
   return (
@@ -72,19 +77,11 @@ const Login = () => {
         </div>
 
         <form className="form" onSubmit={handleLogin}>
-          <div className="input-group">
-            <label className="input-icon">
-              <i className="fa-solid fa-envelope"></i>
-            </label>
-            <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-          </div>
+          <input className="form-input-control" type="text" name="email"  value={loginFormData.email} onChange={handleInputChange} placeholder="Email" />
+          <input className="form-input-control" type="password" name="password" value={loginFormData.password} onChange={handleInputChange}  placeholder="Contraseña" />
 
-          <div className="input-group">
-            <label className="input-icon">
-              <i className="fa-solid fa-key"></i>
-            </label>
-            <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" />
-          </div>
+          {/* <input className="form-input-control" type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+          <input className="form-input-control" type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" /> */}
 
           <div className="form-options">
             <div className="checkbox-group">

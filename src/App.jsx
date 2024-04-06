@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Offline from './pages/Offline.jsx';
+import Offline from "./pages/Offline.jsx";
 import Login from "./pages/Login.jsx";
 import Logout from "./utils/logout.jsx";
 import Register from "./pages/Register.jsx";
@@ -14,6 +14,26 @@ import CreateGroup from "./pages/CreateGroup.jsx";
 // import { DarkModeContext } from "./context/darkModeContext";
 
 function App() {
+
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
+
+  // console.log("is online: "+isOnline);
+  // if(!isOnline){
+  //   window.location.replace("/offline");
+  // }
 
   return (
     <Router>
@@ -27,10 +47,10 @@ function App() {
 
         <Route path="/groups/:ulid" element={<Group />} />
         <Route exact path="/create" element={<CreateGroup />} />
-        
       </Routes>
     </Router>
   );
+
 }
 
 export default App;

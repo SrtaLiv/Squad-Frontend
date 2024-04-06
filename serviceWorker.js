@@ -3,7 +3,7 @@ const CACHE_NAME = 'squad-cache-v1';
 const urlsToCache = [
     '/offline',
     // '/',
-    // '/pwa/index.html',
+    // '/index.html',
     // '/pwa/css/main.css',
     // '/pwa/js/script.js',
     // '/pwa/images/logo.png',

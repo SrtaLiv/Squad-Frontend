@@ -138,13 +138,14 @@ const Group = () => {
               </div>
             </div>
 
-            <div className="badges">
+            {/* removed temporarely */}
+            {/* <div className="badges">
               {Object.values(group.tags).map((tag, index) => (
                 <div className="badge badge-blue" key={tag}>
                   <label className="badge-title">{capFirst(tag)}</label>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             <div className="title">
               <h2>{group.title}</h2>
